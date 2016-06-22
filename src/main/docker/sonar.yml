@@ -1,0 +1,8 @@
+version: '2'
+services:
+    partypayback-sonar:
+        container_name: partypayback-sonar
+        image: sonarqube:5.5-alpine
+        ports:
+            - 9000:9000
+            - 9092:9092

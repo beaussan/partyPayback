@@ -1,0 +1,12 @@
+version: '2'
+services:
+    partypayback-postgresql:
+        container_name: partypayback-postgresql
+        image: postgres:9.5.2
+        # volumes:
+        #     - ~/volumes/jhipster/partyPayback/postgresql/:/var/lib/postgresql/
+        environment:
+            - POSTGRES_USER=partyPayback
+            - POSTGRES_PASSWORD=
+        ports:
+            - 5432:5432
