@@ -1,0 +1,26 @@
+
+<div>
+    <h2><span translate="partyPaybackApp.extandedUser.detail.title">Extanded User</span> {{vm.extandedUser.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="partyPaybackApp.extandedUser.description">Description</span></dt>
+        <dd>
+            <span>{{vm.extandedUser.description}}</span>
+        </dd>
+        <dt><span translate="partyPaybackApp.extandedUser.age">Age</span></dt>
+        <dd>
+            <span>{{vm.extandedUser.age}}</span>
+        </dd>
+        <dt><span translate="partyPaybackApp.extandedUser.gender">Gender</span></dt>
+        <dd>
+            <span translate="{{'partyPaybackApp.Genders.' + vm.extandedUser.gender}}">{{vm.extandedUser.gender}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

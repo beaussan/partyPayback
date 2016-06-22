@@ -26,3 +26,35 @@ entity PayBack {
     ammount Long,
     timestamp ZonedDateTime
 }
+
+relationship OneToMany {
+    ExtandedUser{toPay} to PayBack{source}
+}
+
+relationship OneToMany {
+    ExtandedUser{payRecive} to PayBack{toPay}
+}
+
+relationship OneToMany {
+    ExtandedUser{events} to Event{owner}
+}
+
+relationship ManyToMany {
+    Event{participants} to ExtandedUser{eventParcipatings}
+}
+relationship OneToMany {
+    ExtandedUser{initialPaiment} to InitialPayment{user}
+}
+relationship OneToMany {
+    Event{initialPayiment} to InitialPayment{event}
+}
+relationship OneToMany {
+    Event{payback} to PayBack{event}
+}
+
+
+paginate all with pagination
+
+dto all with mapstruct
+
+service all with serviceClass

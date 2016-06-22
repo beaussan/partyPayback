@@ -1,0 +1,9 @@
+{
+    "partyPaybackApp": {
+        "Genders" : {
+            "null": "",
+            "MALE": "MALE",
+            "FEMALE": "FEMALE"
+        }
+    }
+}

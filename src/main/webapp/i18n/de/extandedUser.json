@@ -1,0 +1,29 @@
+{
+    "partyPaybackApp": {
+        "extandedUser" : {
+            "home": {
+                "title": "Extanded Users",
+                "createLabel": "Extanded User erstellen",
+                "createOrEditLabel": "Extanded User erstellen oder bearbeiten",
+                "search": "Suche nach Extanded User"
+            },
+            "created": "Extanded User erstellt mit ID {{ param }}",
+            "updated": "Extanded User aktualisiert mit ID {{ param }}",
+            "deleted": "Extanded User gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Extanded User {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Extanded User"
+            },
+            "description": "Description",
+            "age": "Age",
+            "gender": "Gender",
+            "toPay": "To Pay",
+            "payRecive": "Pay Recive",
+            "events": "Events",
+            "initialPaiment": "Initial Paiment",
+            "eventParcipatings": "Event Parcipatings"
+        }
+    }
+}

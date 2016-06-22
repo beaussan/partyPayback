@@ -1,0 +1,30 @@
+{
+    "partyPaybackApp": {
+        "event" : {
+            "home": {
+                "title": "Events",
+                "createLabel": "Event erstellen",
+                "createOrEditLabel": "Event erstellen oder bearbeiten",
+                "search": "Suche nach Event"
+            },
+            "created": "Event erstellt mit ID {{ param }}",
+            "updated": "Event aktualisiert mit ID {{ param }}",
+            "deleted": "Event gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Event {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Event"
+            },
+            "date": "Date",
+            "name": "Name",
+            "location": "Location",
+            "longitude": "Longitude",
+            "latitude": "Latitude",
+            "participants": "Participants",
+            "initialPayiment": "Initial Payiment",
+            "payback": "Payback",
+            "owner": "Owner"
+        }
+    }
+}

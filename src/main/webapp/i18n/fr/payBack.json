@@ -1,0 +1,26 @@
+{
+    "partyPaybackApp": {
+        "payBack" : {
+            "home": {
+                "title": "PayBacks",
+                "createLabel": "Créer un nouveau Pay Back",
+                "createOrEditLabel": "Créer ou éditer un Pay Back",
+                "search": "Recherche pour Pay Back"
+            },
+            "created": "Un nouveau Pay Back a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Pay Back avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Pay Back avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Pay Back {{ id }} ?"
+            },
+            "detail": {
+                "title": "Pay Back"
+            },
+            "ammount": "Ammount",
+            "timestamp": "Timestamp",
+            "source": "Source",
+            "toPay": "To Pay",
+            "event": "Event"
+        }
+    }
+}
