@@ -1,0 +1,28 @@
+
+
+enum Genders {
+    MALE, FEMALE
+}
+
+entity ExtandedUser {
+    description String,
+    age Integer,
+    gender Genders
+}
+
+entity Event {
+    date ZonedDateTime,
+    name String required,
+    location String,
+    longitude Long,
+    latitude Long
+}
+
+entity InitialPayment {
+    ammount Long
+}
+
+entity PayBack {
+    ammount Long,
+    timestamp ZonedDateTime
+}
