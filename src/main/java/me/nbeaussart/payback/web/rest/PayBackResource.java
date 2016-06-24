@@ -33,13 +33,13 @@ import java.util.stream.Collectors;
 public class PayBackResource {
 
     private final Logger log = LoggerFactory.getLogger(PayBackResource.class);
-        
+
     @Inject
     private PayBackService payBackService;
-    
+
     @Inject
     private PayBackMapper payBackMapper;
-    
+
     /**
      * POST  /pay-backs : Create a new payBack.
      *
@@ -100,10 +100,28 @@ public class PayBackResource {
     public ResponseEntity<List<PayBackDTO>> getAllPayBacks(Pageable pageable)
         throws URISyntaxException {
         log.debug("REST request to get a page of PayBacks");
-        Page<PayBack> page = payBackService.findAll(pageable); 
+        Page<PayBack> page = payBackService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/pay-backs");
         return new ResponseEntity<>(payBackMapper.payBacksToPayBackDTOs(page.getContent()), headers, HttpStatus.OK);
     }
+    /**
+     * GET  /initial-payments : get all the payBacks.
+     *
+     * @param id the id of the Evenemnet to retrieve
+     * @return the ResponseEntity with status 200 (OK) and the list of payBacks in body
+     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
+     */
+    @RequestMapping(value = "/pay-backs/event/{id}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<PayBackDTO>> getAllPayBacksForEvent(@PathVariable Long id)
+        throws URISyntaxException {
+        log.debug("REST request to get a page of InitialPayments");
+        List<PayBack> page = payBackService.findAllByEvent(id);
+        return new ResponseEntity<>(payBackMapper.payBacksToPayBackDTOs(page), HttpStatus.OK);
+    }
+
 
     /**
      * GET  /pay-backs/:id : get the "id" payBack.

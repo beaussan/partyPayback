@@ -1,33 +1,5 @@
 
 
-enum Genders {
-    MALE, FEMALE
-}
-
-entity ExtandedUser {
-    description String,
-    age Integer,
-    gender Genders
-}
-
-entity Event {
-    date ZonedDateTime,
-    name String required,
-    location String,
-    longitude Long,
-    latitude Long
-}
-
-entity InitialPayment {
-    ammount Long
-}
-
-entity PayBack {
-    ammount Long,
-    timestamp ZonedDateTime
-}
-
-
 entity ExtandedUser {
     name String required,
     email String,
@@ -48,6 +20,10 @@ entity InitialPayment {
 entity PayBack {
     ammount Double,
     timestamp ZonedDateTime
+}
+
+relationship OneToOne {
+    ExtandedUser{user} to User
 }
 
 relationship OneToMany {

@@ -12,4 +12,5 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface PayBackRepository extends JpaRepository<PayBack,Long> {
 
+    List<PayBack> findByEventId(Long id);
 }

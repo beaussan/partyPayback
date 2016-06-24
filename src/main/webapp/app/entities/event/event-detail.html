@@ -31,6 +31,10 @@
             <a ui-sref="extanded-user-detail({id:vm.event.ownerId})">{{vm.event.ownerId}}</a>
         </dd>
     </dl>
+    <pre>Event : {{vm.event | json}}</pre>
+    <pre>Inits : {{vm.initials | json}}</pre>
+    <pre>Paybacks : {{vm.paybacks | json}}</pre>
+
 
     <button type="submit"
             onclick="window.history.back()"

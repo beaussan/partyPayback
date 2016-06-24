@@ -5,9 +5,9 @@
         .module('partyPaybackApp')
         .controller('ExtandedUserDetailController', ExtandedUserDetailController);
 
-    ExtandedUserDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'ExtandedUser', 'PayBack', 'Event', 'InitialPayment'];
+    ExtandedUserDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'ExtandedUser', 'User', 'PayBack', 'Event', 'InitialPayment'];
 
-    function ExtandedUserDetailController($scope, $rootScope, $stateParams, entity, ExtandedUser, PayBack, Event, InitialPayment) {
+    function ExtandedUserDetailController($scope, $rootScope, $stateParams, entity, ExtandedUser, User, PayBack, Event, InitialPayment) {
         var vm = this;
 
         vm.extandedUser = entity;

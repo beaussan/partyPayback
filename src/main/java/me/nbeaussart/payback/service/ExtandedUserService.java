@@ -2,8 +2,6 @@ package me.nbeaussart.payback.service;
 
 import me.nbeaussart.payback.domain.ExtandedUser;
 import me.nbeaussart.payback.repository.ExtandedUserRepository;
-import me.nbeaussart.payback.web.rest.dto.ExtandedUserDTO;
-import me.nbeaussart.payback.web.rest.mapper.ExtandedUserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -12,9 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing ExtandedUser.
@@ -28,20 +24,15 @@ public class ExtandedUserService {
     @Inject
     private ExtandedUserRepository extandedUserRepository;
     
-    @Inject
-    private ExtandedUserMapper extandedUserMapper;
-    
     /**
      * Save a extandedUser.
      * 
-     * @param extandedUserDTO the entity to save
+     * @param extandedUser the entity to save
      * @return the persisted entity
      */
-    public ExtandedUserDTO save(ExtandedUserDTO extandedUserDTO) {
-        log.debug("Request to save ExtandedUser : {}", extandedUserDTO);
-        ExtandedUser extandedUser = extandedUserMapper.extandedUserDTOToExtandedUser(extandedUserDTO);
-        extandedUser = extandedUserRepository.save(extandedUser);
-        ExtandedUserDTO result = extandedUserMapper.extandedUserToExtandedUserDTO(extandedUser);
+    public ExtandedUser save(ExtandedUser extandedUser) {
+        log.debug("Request to save ExtandedUser : {}", extandedUser);
+        ExtandedUser result = extandedUserRepository.save(extandedUser);
         return result;
     }
 
@@ -65,11 +56,10 @@ public class ExtandedUserService {
      *  @return the entity
      */
     @Transactional(readOnly = true) 
-    public ExtandedUserDTO findOne(Long id) {
+    public ExtandedUser findOne(Long id) {
         log.debug("Request to get ExtandedUser : {}", id);
         ExtandedUser extandedUser = extandedUserRepository.findOne(id);
-        ExtandedUserDTO extandedUserDTO = extandedUserMapper.extandedUserToExtandedUserDTO(extandedUser);
-        return extandedUserDTO;
+        return extandedUser;
     }
 
     /**

@@ -32,6 +32,10 @@ public class ExtandedUser implements Serializable {
     @Column(name = "sendin_email")
     private Boolean sendinEmail;
 
+    @OneToOne
+    @JoinColumn(unique = true)
+    private User user;
+
     @OneToMany(mappedBy = "source")
     @JsonIgnore
     private Set<PayBack> toPays = new HashSet<>();
@@ -82,6 +86,14 @@ public class ExtandedUser implements Serializable {
 
     public void setSendinEmail(Boolean sendinEmail) {
         this.sendinEmail = sendinEmail;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Set<PayBack> getToPays() {

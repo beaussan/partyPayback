@@ -5,14 +5,15 @@
         .module('partyPaybackApp')
         .controller('ExtandedUserDialogController', ExtandedUserDialogController);
 
-    ExtandedUserDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'ExtandedUser', 'PayBack', 'Event', 'InitialPayment'];
+    ExtandedUserDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'ExtandedUser', 'User', 'PayBack', 'Event', 'InitialPayment'];
 
-    function ExtandedUserDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, ExtandedUser, PayBack, Event, InitialPayment) {
+    function ExtandedUserDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, ExtandedUser, User, PayBack, Event, InitialPayment) {
         var vm = this;
 
         vm.extandedUser = entity;
         vm.clear = clear;
         vm.save = save;
+        vm.users = User.query();
         vm.paybacks = PayBack.query();
         vm.events = Event.query();
         vm.initialpayments = InitialPayment.query();

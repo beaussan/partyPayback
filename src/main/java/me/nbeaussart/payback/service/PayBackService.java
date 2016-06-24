@@ -24,16 +24,16 @@ import java.util.stream.Collectors;
 public class PayBackService {
 
     private final Logger log = LoggerFactory.getLogger(PayBackService.class);
-    
+
     @Inject
     private PayBackRepository payBackRepository;
-    
+
     @Inject
     private PayBackMapper payBackMapper;
-    
+
     /**
      * Save a payBack.
-     * 
+     *
      * @param payBackDTO the entity to save
      * @return the persisted entity
      */
@@ -47,14 +47,14 @@ public class PayBackService {
 
     /**
      *  Get all the payBacks.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public Page<PayBack> findAll(Pageable pageable) {
         log.debug("Request to get all PayBacks");
-        Page<PayBack> result = payBackRepository.findAll(pageable); 
+        Page<PayBack> result = payBackRepository.findAll(pageable);
         return result;
     }
 
@@ -64,7 +64,7 @@ public class PayBackService {
      *  @param id the id of the entity
      *  @return the entity
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public PayBackDTO findOne(Long id) {
         log.debug("Request to get PayBack : {}", id);
         PayBack payBack = payBackRepository.findOne(id);
@@ -74,11 +74,18 @@ public class PayBackService {
 
     /**
      *  Delete the  payBack by id.
-     *  
+     *
      *  @param id the id of the entity
      */
     public void delete(Long id) {
         log.debug("Request to delete PayBack : {}", id);
         payBackRepository.delete(id);
+    }
+
+    public List<PayBack> findAllByEvent(Long id) {
+        log.debug("Request to get all InitialPayments for event id : {}", id);
+        List<PayBack> result = payBackRepository.findByEventId(id);
+        return result;
+
     }
 }

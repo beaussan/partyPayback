@@ -20,6 +20,17 @@
                     return data;
                 }
             },
+            'byEvent': {
+                method: 'GET',
+                isArray : true,
+                url : "api/initial-payments/event/:eventId",
+                transformResponse: function (data) {
+                    if (data) {
+                        data = angular.fromJson(data);
+                    }
+                    return data;
+                }
+            },
             'update': { method:'PUT' }
         });
     }

@@ -35,7 +35,7 @@
     }
   ],
   "changelogDate": "20160624150853",
-  "dto": "mapstruct",
+  "dto": "no",
   "pagination": "pagination",
   "service": "serviceClass",
   "entityTableName": "pay_back"

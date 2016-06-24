@@ -56,7 +56,7 @@
     }
   ],
   "changelogDate": "20160624150851",
-  "dto": "mapstruct",
+  "dto": "no",
   "pagination": "pagination",
   "service": "serviceClass",
   "entityTableName": "event"

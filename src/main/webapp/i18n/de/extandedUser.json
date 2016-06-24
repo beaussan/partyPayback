@@ -19,6 +19,7 @@
             "name": "Name",
             "email": "Email",
             "sendinEmail": "Sendin Email",
+            "user": "User",
             "toPay": "To Pay",
             "payRecive": "Pay Recive",
             "events": "Events",

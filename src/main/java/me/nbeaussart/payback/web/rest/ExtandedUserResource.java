@@ -5,8 +5,6 @@ import me.nbeaussart.payback.domain.ExtandedUser;
 import me.nbeaussart.payback.service.ExtandedUserService;
 import me.nbeaussart.payback.web.rest.util.HeaderUtil;
 import me.nbeaussart.payback.web.rest.util.PaginationUtil;
-import me.nbeaussart.payback.web.rest.dto.ExtandedUserDTO;
-import me.nbeaussart.payback.web.rest.mapper.ExtandedUserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -21,10 +19,8 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * REST controller for managing ExtandedUser.
@@ -38,26 +34,23 @@ public class ExtandedUserResource {
     @Inject
     private ExtandedUserService extandedUserService;
     
-    @Inject
-    private ExtandedUserMapper extandedUserMapper;
-    
     /**
      * POST  /extanded-users : Create a new extandedUser.
      *
-     * @param extandedUserDTO the extandedUserDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new extandedUserDTO, or with status 400 (Bad Request) if the extandedUser has already an ID
+     * @param extandedUser the extandedUser to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new extandedUser, or with status 400 (Bad Request) if the extandedUser has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @RequestMapping(value = "/extanded-users",
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<ExtandedUserDTO> createExtandedUser(@Valid @RequestBody ExtandedUserDTO extandedUserDTO) throws URISyntaxException {
-        log.debug("REST request to save ExtandedUser : {}", extandedUserDTO);
-        if (extandedUserDTO.getId() != null) {
+    public ResponseEntity<ExtandedUser> createExtandedUser(@Valid @RequestBody ExtandedUser extandedUser) throws URISyntaxException {
+        log.debug("REST request to save ExtandedUser : {}", extandedUser);
+        if (extandedUser.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("extandedUser", "idexists", "A new extandedUser cannot already have an ID")).body(null);
         }
-        ExtandedUserDTO result = extandedUserService.save(extandedUserDTO);
+        ExtandedUser result = extandedUserService.save(extandedUser);
         return ResponseEntity.created(new URI("/api/extanded-users/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("extandedUser", result.getId().toString()))
             .body(result);
@@ -66,24 +59,24 @@ public class ExtandedUserResource {
     /**
      * PUT  /extanded-users : Updates an existing extandedUser.
      *
-     * @param extandedUserDTO the extandedUserDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated extandedUserDTO,
-     * or with status 400 (Bad Request) if the extandedUserDTO is not valid,
-     * or with status 500 (Internal Server Error) if the extandedUserDTO couldnt be updated
+     * @param extandedUser the extandedUser to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated extandedUser,
+     * or with status 400 (Bad Request) if the extandedUser is not valid,
+     * or with status 500 (Internal Server Error) if the extandedUser couldnt be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @RequestMapping(value = "/extanded-users",
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<ExtandedUserDTO> updateExtandedUser(@Valid @RequestBody ExtandedUserDTO extandedUserDTO) throws URISyntaxException {
-        log.debug("REST request to update ExtandedUser : {}", extandedUserDTO);
-        if (extandedUserDTO.getId() == null) {
-            return createExtandedUser(extandedUserDTO);
+    public ResponseEntity<ExtandedUser> updateExtandedUser(@Valid @RequestBody ExtandedUser extandedUser) throws URISyntaxException {
+        log.debug("REST request to update ExtandedUser : {}", extandedUser);
+        if (extandedUser.getId() == null) {
+            return createExtandedUser(extandedUser);
         }
-        ExtandedUserDTO result = extandedUserService.save(extandedUserDTO);
+        ExtandedUser result = extandedUserService.save(extandedUser);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert("extandedUser", extandedUserDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert("extandedUser", extandedUser.getId().toString()))
             .body(result);
     }
 
@@ -98,28 +91,28 @@ public class ExtandedUserResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<ExtandedUserDTO>> getAllExtandedUsers(Pageable pageable)
+    public ResponseEntity<List<ExtandedUser>> getAllExtandedUsers(Pageable pageable)
         throws URISyntaxException {
         log.debug("REST request to get a page of ExtandedUsers");
         Page<ExtandedUser> page = extandedUserService.findAll(pageable); 
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/extanded-users");
-        return new ResponseEntity<>(extandedUserMapper.extandedUsersToExtandedUserDTOs(page.getContent()), headers, HttpStatus.OK);
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**
      * GET  /extanded-users/:id : get the "id" extandedUser.
      *
-     * @param id the id of the extandedUserDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the extandedUserDTO, or with status 404 (Not Found)
+     * @param id the id of the extandedUser to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the extandedUser, or with status 404 (Not Found)
      */
     @RequestMapping(value = "/extanded-users/{id}",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<ExtandedUserDTO> getExtandedUser(@PathVariable Long id) {
+    public ResponseEntity<ExtandedUser> getExtandedUser(@PathVariable Long id) {
         log.debug("REST request to get ExtandedUser : {}", id);
-        ExtandedUserDTO extandedUserDTO = extandedUserService.findOne(id);
-        return Optional.ofNullable(extandedUserDTO)
+        ExtandedUser extandedUser = extandedUserService.findOne(id);
+        return Optional.ofNullable(extandedUser)
             .map(result -> new ResponseEntity<>(
                 result,
                 HttpStatus.OK))
@@ -129,7 +122,7 @@ public class ExtandedUserResource {
     /**
      * DELETE  /extanded-users/:id : delete the "id" extandedUser.
      *
-     * @param id the id of the extandedUserDTO to delete
+     * @param id the id of the extandedUser to delete
      * @return the ResponseEntity with status 200 (OK)
      */
     @RequestMapping(value = "/extanded-users/{id}",
