@@ -13,5 +13,6 @@
     <include file="classpath:config/liquibase/changelog/20160624150851_added_entity_constraints_Event.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160624150852_added_entity_constraints_InitialPayment.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160624150853_added_entity_constraints_PayBack.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160624190715_changelog.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

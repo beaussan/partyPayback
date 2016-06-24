@@ -24,16 +24,16 @@ import java.util.stream.Collectors;
 public class InitialPaymentService {
 
     private final Logger log = LoggerFactory.getLogger(InitialPaymentService.class);
-    
+
     @Inject
     private InitialPaymentRepository initialPaymentRepository;
-    
+
     @Inject
     private InitialPaymentMapper initialPaymentMapper;
-    
+
     /**
      * Save a initialPayment.
-     * 
+     *
      * @param initialPaymentDTO the entity to save
      * @return the persisted entity
      */
@@ -47,14 +47,26 @@ public class InitialPaymentService {
 
     /**
      *  Get all the initialPayments.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public Page<InitialPayment> findAll(Pageable pageable) {
         log.debug("Request to get all InitialPayments");
-        Page<InitialPayment> result = initialPaymentRepository.findAll(pageable); 
+        Page<InitialPayment> result = initialPaymentRepository.findAll(pageable);
+        return result;
+    }
+
+    /**
+     *  Get all the initialPayment for a spesific event.
+     *  @param id the event to read from
+     *  @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<InitialPayment> findAllByEvent(Long id) {
+        log.debug("Request to get all InitialPayments for event id : {}", id);
+        List<InitialPayment> result = initialPaymentRepository.findByEventId(id);
         return result;
     }
 
@@ -64,7 +76,7 @@ public class InitialPaymentService {
      *  @param id the id of the entity
      *  @return the entity
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public InitialPaymentDTO findOne(Long id) {
         log.debug("Request to get InitialPayment : {}", id);
         InitialPayment initialPayment = initialPaymentRepository.findOne(id);
@@ -74,11 +86,12 @@ public class InitialPaymentService {
 
     /**
      *  Delete the  initialPayment by id.
-     *  
+     *
      *  @param id the id of the entity
      */
     public void delete(Long id) {
         log.debug("Request to delete InitialPayment : {}", id);
         initialPaymentRepository.delete(id);
     }
+
 }

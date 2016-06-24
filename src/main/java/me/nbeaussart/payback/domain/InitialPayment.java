@@ -9,7 +9,9 @@ import java.util.Objects;
  * A InitialPayment.
  */
 @Entity
-@Table(name = "initial_payment")
+@Table(name = "initial_payment", uniqueConstraints={
+    @UniqueConstraint(columnNames = {"user_id", "event_id"})
+})
 public class InitialPayment implements Serializable {
 
     private static final long serialVersionUID = 1L;

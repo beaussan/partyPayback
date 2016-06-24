@@ -34,13 +34,13 @@ import java.util.stream.Collectors;
 public class EventResource {
 
     private final Logger log = LoggerFactory.getLogger(EventResource.class);
-        
+
     @Inject
     private EventService eventService;
-    
+
     @Inject
     private EventMapper eventMapper;
-    
+
     /**
      * POST  /events : Create a new event.
      *
@@ -101,7 +101,7 @@ public class EventResource {
     public ResponseEntity<List<EventDTO>> getAllEvents(Pageable pageable)
         throws URISyntaxException {
         log.debug("REST request to get a page of Events");
-        Page<Event> page = eventService.findAll(pageable); 
+        Page<Event> page = eventService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/events");
         return new ResponseEntity<>(eventMapper.eventsToEventDTOs(page.getContent()), headers, HttpStatus.OK);
     }

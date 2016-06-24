@@ -12,4 +12,5 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface InitialPaymentRepository extends JpaRepository<InitialPayment,Long> {
 
+    List<InitialPayment> findByEventId(Long id);
 }

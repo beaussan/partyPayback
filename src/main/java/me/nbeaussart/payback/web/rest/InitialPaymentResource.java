@@ -33,13 +33,13 @@ import java.util.stream.Collectors;
 public class InitialPaymentResource {
 
     private final Logger log = LoggerFactory.getLogger(InitialPaymentResource.class);
-        
+
     @Inject
     private InitialPaymentService initialPaymentService;
-    
+
     @Inject
     private InitialPaymentMapper initialPaymentMapper;
-    
+
     /**
      * POST  /initial-payments : Create a new initialPayment.
      *
@@ -100,9 +100,28 @@ public class InitialPaymentResource {
     public ResponseEntity<List<InitialPaymentDTO>> getAllInitialPayments(Pageable pageable)
         throws URISyntaxException {
         log.debug("REST request to get a page of InitialPayments");
-        Page<InitialPayment> page = initialPaymentService.findAll(pageable); 
+        Page<InitialPayment> page = initialPaymentService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/initial-payments");
         return new ResponseEntity<>(initialPaymentMapper.initialPaymentsToInitialPaymentDTOs(page.getContent()), headers, HttpStatus.OK);
+    }
+
+
+    /**
+     * GET  /initial-payments : get all the initialPayments.
+     *
+     * @param id the id of the Evenemnet to retrieve
+     * @return the ResponseEntity with status 200 (OK) and the list of initialPayments in body
+     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
+     */
+    @RequestMapping(value = "/initial-payments/event/{id}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<InitialPaymentDTO>> getAllInitialPaymentsForEvent(@PathVariable Long id)
+        throws URISyntaxException {
+        log.debug("REST request to get a page of InitialPayments");
+        List<InitialPayment> page = initialPaymentService.findAllByEvent(id);
+        return new ResponseEntity<>(initialPaymentMapper.initialPaymentsToInitialPaymentDTOs(page), HttpStatus.OK);
     }
 
     /**
