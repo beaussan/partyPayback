@@ -202,6 +202,7 @@ dependencies {
     testCompile "io.gatling.highcharts:gatling-charts-highcharts:${gatling_version}"
     
     optional "org.springframework.boot:spring-boot-configuration-processor:${spring_boot_version}"
+    compile 'org.javers:javers-spring-boot-starter-sql:2.0.0'
     //jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
 }
 

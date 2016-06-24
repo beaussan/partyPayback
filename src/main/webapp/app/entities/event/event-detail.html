@@ -1,0 +1,40 @@
+
+<div>
+    <h2><span translate="partyPaybackApp.event.detail.title">Event</span> {{vm.event.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="partyPaybackApp.event.date">Date</span></dt>
+        <dd>
+            <span>{{vm.event.date | date:'medium'}}</span>
+        </dd>
+        <dt><span translate="partyPaybackApp.event.name">Name</span></dt>
+        <dd>
+            <span>{{vm.event.name}}</span>
+        </dd>
+        <dt><span translate="partyPaybackApp.event.location">Location</span></dt>
+        <dd>
+            <span>{{vm.event.location}}</span>
+        </dd>
+        <dt><span translate="partyPaybackApp.event.sendinEmail">Sendin Email</span></dt>
+        <dd>
+            <span>{{vm.event.sendinEmail}}</span>
+        </dd>
+        <dt><span translate="partyPaybackApp.event.participants">Participants</span></dt>
+        <dd>
+            <span ng-repeat="participants in vm.event.participants">
+                <a ui-sref="extanded-user-detail({id: {{participants.id}}})">{{participants.id}}</a>{{$last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span translate="partyPaybackApp.event.owner">Owner</span></dt>
+        <dd>
+            <a ui-sref="extanded-user-detail({id:vm.event.ownerId})">{{vm.event.ownerId}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

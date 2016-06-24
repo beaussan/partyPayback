@@ -1,0 +1,26 @@
+{
+    "partyPaybackApp": {
+        "payBack" : {
+            "home": {
+                "title": "Pay Backs",
+                "createLabel": "Create a new Pay Back",
+                "createOrEditLabel": "Create or edit a Pay Back",
+                "search": "Search for Pay Back"
+            },
+            "created": "A new Pay Back is created with identifier {{ param }}",
+            "updated": "A Pay Back is updated with identifier {{ param }}",
+            "deleted": "A Pay Back is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Pay Back {{ id }}?"
+            },
+            "detail": {
+                "title": "Pay Back"
+            },
+            "ammount": "Ammount",
+            "timestamp": "Timestamp",
+            "source": "Source",
+            "toPay": "To Pay",
+            "event": "Event"
+        }
+    }
+}

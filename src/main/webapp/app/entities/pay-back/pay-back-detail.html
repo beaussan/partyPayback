@@ -1,0 +1,34 @@
+
+<div>
+    <h2><span translate="partyPaybackApp.payBack.detail.title">Pay Back</span> {{vm.payBack.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="partyPaybackApp.payBack.ammount">Ammount</span></dt>
+        <dd>
+            <span>{{vm.payBack.ammount}}</span>
+        </dd>
+        <dt><span translate="partyPaybackApp.payBack.timestamp">Timestamp</span></dt>
+        <dd>
+            <span>{{vm.payBack.timestamp | date:'medium'}}</span>
+        </dd>
+        <dt><span translate="partyPaybackApp.payBack.source">Source</span></dt>
+        <dd>
+            <a ui-sref="extanded-user-detail({id:vm.payBack.sourceId})">{{vm.payBack.sourceId}}</a>
+        </dd>
+        <dt><span translate="partyPaybackApp.payBack.toPay">To Pay</span></dt>
+        <dd>
+            <a ui-sref="extanded-user-detail({id:vm.payBack.toPayId})">{{vm.payBack.toPayId}}</a>
+        </dd>
+        <dt><span translate="partyPaybackApp.payBack.event">Event</span></dt>
+        <dd>
+            <a ui-sref="event-detail({id:vm.payBack.eventId})">{{vm.payBack.eventId}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

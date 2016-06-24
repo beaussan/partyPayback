@@ -26,3 +26,58 @@ entity PayBack {
     ammount Long,
     timestamp ZonedDateTime
 }
+
+
+entity ExtandedUser {
+    name String required,
+    email String,
+    sendinEmail Boolean
+}
+
+entity Event {
+    date ZonedDateTime,
+    name String required,
+    location String,
+    sendinEmail Boolean
+}
+
+entity InitialPayment {
+    ammount Double
+}
+
+entity PayBack {
+    ammount Double,
+    timestamp ZonedDateTime
+}
+
+relationship OneToMany {
+    ExtandedUser{toPay} to PayBack{source}
+}
+
+relationship OneToMany {
+    ExtandedUser{payRecive} to PayBack{toPay}
+}
+
+relationship OneToMany {
+    ExtandedUser{events} to Event{owner}
+}
+
+relationship ManyToMany {
+    Event{participants} to ExtandedUser{eventParcipatings}
+}
+relationship OneToMany {
+    ExtandedUser{initialPaiment} to InitialPayment{user}
+}
+relationship OneToMany {
+    Event{initialPayiment} to InitialPayment{event}
+}
+relationship OneToMany {
+    Event{payback} to PayBack{event}
+}
+
+
+paginate all with pagination
+
+dto all with mapstruct
+
+service all with serviceClass   

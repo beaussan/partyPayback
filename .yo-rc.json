@@ -31,5 +31,8 @@
       "fr",
       "de"
     ]
+  },
+  "generator-jhipster-entity-audit": {
+    "auditFramework": "javers"
   }
 }

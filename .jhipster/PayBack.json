@@ -1,0 +1,42 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "many-to-one",
+      "relationshipName": "source",
+      "otherEntityName": "extandedUser",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipId": 2,
+      "relationshipType": "many-to-one",
+      "relationshipName": "toPay",
+      "otherEntityName": "extandedUser",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipId": 3,
+      "relationshipType": "many-to-one",
+      "relationshipName": "event",
+      "otherEntityName": "event",
+      "otherEntityField": "id"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "ammount",
+      "fieldType": "Double"
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "timestamp",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "changelogDate": "20160624150853",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "entityTableName": "pay_back"
+}

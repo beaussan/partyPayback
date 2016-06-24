@@ -1,0 +1,63 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "many-to-many",
+      "relationshipName": "participants",
+      "otherEntityName": "extandedUser",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipId": 2,
+      "relationshipType": "one-to-many",
+      "relationshipName": "initialPayiment",
+      "otherEntityName": "initialPayment",
+      "otherEntityRelationshipName": "event"
+    },
+    {
+      "relationshipId": 3,
+      "relationshipType": "one-to-many",
+      "relationshipName": "payback",
+      "otherEntityName": "payBack",
+      "otherEntityRelationshipName": "event"
+    },
+    {
+      "relationshipId": 4,
+      "relationshipType": "many-to-one",
+      "relationshipName": "owner",
+      "otherEntityName": "extandedUser",
+      "otherEntityField": "id"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "date",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldId": 3,
+      "fieldName": "location",
+      "fieldType": "String"
+    },
+    {
+      "fieldId": 4,
+      "fieldName": "sendinEmail",
+      "fieldType": "Boolean"
+    }
+  ],
+  "changelogDate": "20160624150851",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "entityTableName": "event"
+}
