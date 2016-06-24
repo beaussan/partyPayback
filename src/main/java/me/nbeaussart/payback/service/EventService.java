@@ -24,16 +24,16 @@ import java.util.stream.Collectors;
 public class EventService {
 
     private final Logger log = LoggerFactory.getLogger(EventService.class);
-    
+
     @Inject
     private EventRepository eventRepository;
-    
+
     @Inject
     private EventMapper eventMapper;
-    
+
     /**
      * Save a event.
-     * 
+     *
      * @param eventDTO the entity to save
      * @return the persisted entity
      */
@@ -47,14 +47,14 @@ public class EventService {
 
     /**
      *  Get all the events.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public Page<Event> findAll(Pageable pageable) {
         log.debug("Request to get all Events");
-        Page<Event> result = eventRepository.findAll(pageable); 
+        Page<Event> result = eventRepository.findAll(pageable);
         return result;
     }
 
@@ -64,7 +64,7 @@ public class EventService {
      *  @param id the id of the entity
      *  @return the entity
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public EventDTO findOne(Long id) {
         log.debug("Request to get Event : {}", id);
         Event event = eventRepository.findOneWithEagerRelationships(id);
@@ -74,7 +74,7 @@ public class EventService {
 
     /**
      *  Delete the  event by id.
-     *  
+     *
      *  @param id the id of the entity
      */
     public void delete(Long id) {

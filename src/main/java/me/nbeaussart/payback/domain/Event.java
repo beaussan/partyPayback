@@ -1,8 +1,6 @@
 package me.nbeaussart.payback.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -17,7 +15,6 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "event")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Event implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,21 +36,18 @@ public class Event implements Serializable {
     @Column(name = "sendin_email")
     private Boolean sendinEmail;
 
-    @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "event_participants",
-               joinColumns = @JoinColumn(name="events_id", referencedColumnName="ID"),
+               joinColumns = @JoinColumn( name="events_id", referencedColumnName="ID"),
                inverseJoinColumns = @JoinColumn(name="participants_id", referencedColumnName="ID"))
     private Set<ExtandedUser> participants = new HashSet<>();
 
-    @OneToMany(mappedBy = "event")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "event")
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<InitialPayment> initialPayiments = new HashSet<>();
 
-    @OneToMany(mappedBy = "event")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "event")
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<PayBack> paybacks = new HashSet<>();
 
     @ManyToOne

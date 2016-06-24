@@ -1,8 +1,6 @@
 package me.nbeaussart.payback.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -16,7 +14,6 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "extanded_user")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class ExtandedUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,27 +34,22 @@ public class ExtandedUser implements Serializable {
 
     @OneToMany(mappedBy = "source")
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<PayBack> toPays = new HashSet<>();
 
     @OneToMany(mappedBy = "toPay")
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<PayBack> payRecives = new HashSet<>();
 
     @OneToMany(mappedBy = "owner")
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Event> events = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<InitialPayment> initialPaiments = new HashSet<>();
 
     @ManyToMany(mappedBy = "participants")
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Event> eventParcipatings = new HashSet<>();
 
     public Long getId() {

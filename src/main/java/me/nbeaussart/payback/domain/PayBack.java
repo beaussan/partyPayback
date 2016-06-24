@@ -1,7 +1,5 @@
 package me.nbeaussart.payback.domain;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,7 +11,6 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "pay_back")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class PayBack implements Serializable {
 
     private static final long serialVersionUID = 1L;
