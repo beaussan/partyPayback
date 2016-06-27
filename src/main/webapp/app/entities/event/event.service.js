@@ -21,6 +21,16 @@
                     return data;
                 }
             },
+            'build': {
+                method: 'GET',
+                url : "api/events/:id/build",
+                transformResponse: function (data) {
+                    if (data) {
+                        data = angular.fromJson(data);
+                    }
+                    return data;
+                }
+            },
             'update': { method:'PUT' }
         });
     }

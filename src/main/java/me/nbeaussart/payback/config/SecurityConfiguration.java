@@ -115,7 +115,23 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/account/reset_password/init").permitAll()
             .antMatchers("/api/account/reset_password/finish").permitAll()
             .antMatchers("/api/profile-info").permitAll()
+
             .antMatchers("/api/public/**").permitAll()
+
+
+            .antMatchers(HttpMethod.GET,  "/api/extanded-users/**").permitAll()
+            .antMatchers(HttpMethod.POST, "/api/extanded-users").permitAll()
+
+            .antMatchers(HttpMethod.GET,  "/api/pay-backs/event/**").permitAll()
+
+            .antMatchers(HttpMethod.GET,  "/api/initial-payments/event/**").permitAll()
+            .antMatchers(HttpMethod.POST, "/api/initial-payments").permitAll()
+
+            .antMatchers(HttpMethod.POST, "/api/events").permitAll()
+            .antMatchers(HttpMethod.GET,  "/api/events/**").permitAll()
+            .antMatchers(HttpMethod.GET,  "/api/events/**/build").permitAll()
+
+
             .antMatchers("/api/**").authenticated()
             .antMatchers("/websocket/tracker").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/websocket/**").permitAll()
