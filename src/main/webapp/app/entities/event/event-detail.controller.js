@@ -15,8 +15,8 @@
         vm.paybacks = undefined;
 
         if (entity.id){
-            InitialPayment.byEvent({ eventId:entity.id });
-            PayBack.byEvent({ eventId:entity.id });
+            vm.initials = InitialPayment.byEvent({ eventId:entity.id });
+            vm.paybacks = PayBack.byEvent({ eventId:entity.id });
         }
 
         var unsubscribe = $rootScope.$on('partyPaybackApp:eventUpdate', function(event, result) {
