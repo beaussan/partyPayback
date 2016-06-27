@@ -39,26 +39,16 @@ public class PublicResource {
     private final Logger log = LoggerFactory.getLogger(PublicResource.class);
 
     @Inject
-    private PayBackService payBackService;
+    private PayBackResource payBackResource;
 
     @Inject
-    private PayBackMapper payBackMapper;
+    private ExtandedUserResource extandedUserResource;
 
     @Inject
-    private ExtandedUserService extandedUserService;
+    private InitialPaymentResource initialPaymentResource;
 
     @Inject
-    private InitialPaymentService initialPaymentService;
-
-    @Inject
-    private InitialPaymentMapper initialPaymentMapper;
-
-    @Inject
-    private EventService eventService;
-
-    @Inject
-    private EventMapper eventMapper;
-
+    private EventResource eventResource;
 
     /**
      * GET  /initial-payments : get all the payBacks.
@@ -74,8 +64,7 @@ public class PublicResource {
     public ResponseEntity<List<PayBackDTO>> getAllPayBacksForEvent(@PathVariable Long id)
         throws URISyntaxException {
         log.debug("REST request to get a page of InitialPayments");
-        List<PayBack> page = payBackService.findAllByEvent(id);
-        return new ResponseEntity<>(payBackMapper.payBacksToPayBackDTOs(page), HttpStatus.OK);
+        return payBackResource.getAllPayBacksForEvent(id);
     }
 
 
@@ -93,13 +82,7 @@ public class PublicResource {
     @Timed
     public ResponseEntity<InitialPaymentDTO> createInitialPayment(@RequestBody InitialPaymentDTO initialPaymentDTO) throws URISyntaxException {
         log.debug("REST request to save InitialPayment : {}", initialPaymentDTO);
-        if (initialPaymentDTO.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("initialPayment", "idexists", "A new initialPayment cannot already have an ID")).body(null);
-        }
-        InitialPaymentDTO result = initialPaymentService.save(initialPaymentDTO);
-        return ResponseEntity.created(new URI("/api/initial-payments/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("initialPayment", result.getId().toString()))
-            .body(result);
+        return initialPaymentResource.createInitialPayment(initialPaymentDTO);
     }
 
     /**
@@ -116,11 +99,8 @@ public class PublicResource {
     public ResponseEntity<List<InitialPaymentDTO>> getAllInitialPaymentsForEvent(@PathVariable Long id)
         throws URISyntaxException {
         log.debug("REST request to get a page of InitialPayments");
-        List<InitialPayment> page = initialPaymentService.findAllByEvent(id);
-        return new ResponseEntity<>(initialPaymentMapper.initialPaymentsToInitialPaymentDTOs(page), HttpStatus.OK);
+        return initialPaymentResource.getAllInitialPaymentsForEvent(id);
     }
-
-
 
 
     /**
@@ -135,14 +115,8 @@ public class PublicResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<ExtandedUser> createExtandedUser(@Valid @RequestBody ExtandedUser extandedUser) throws URISyntaxException {
-        log.debug("REST request to save ExtandedUser : {}", extandedUser);
-        if (extandedUser.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("extandedUser", "idexists", "A new extandedUser cannot already have an ID")).body(null);
-        }
-        ExtandedUser result = extandedUserService.save(extandedUser);
-        return ResponseEntity.created(new URI("/api/extanded-users/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("extandedUser", result.getId().toString()))
-            .body(result);
+        log.debug("REST request to save public ExtandedUser : {}", extandedUser);
+        return extandedUserResource.createExtandedUser(extandedUser);
     }
 
 
@@ -158,13 +132,8 @@ public class PublicResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<ExtandedUser> getExtandedUser(@PathVariable Long id) {
-        log.debug("REST request to get ExtandedUser : {}", id);
-        ExtandedUser extandedUser = extandedUserService.findOne(id);
-        return Optional.ofNullable(extandedUser)
-            .map(result -> new ResponseEntity<>(
-                result,
-                HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        log.debug("REST request to get public ExtandedUser : {}", id);
+        return extandedUserResource.getExtandedUser(id);
     }
 
 
@@ -181,13 +150,7 @@ public class PublicResource {
     @Timed
     public ResponseEntity<EventDTO> createEvent(@Valid @RequestBody EventDTO eventDTO) throws URISyntaxException {
         log.debug("REST request to save Event : {}", eventDTO);
-        if (eventDTO.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("event", "idexists", "A new event cannot already have an ID")).body(null);
-        }
-        EventDTO result = eventService.save(eventDTO);
-        return ResponseEntity.created(new URI("/api/events/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("event", result.getId().toString()))
-            .body(result);
+        return eventResource.createEvent(eventDTO);
     }
 
 
@@ -203,12 +166,7 @@ public class PublicResource {
     @Timed
     public ResponseEntity<EventDTO> getEvent(@PathVariable Long id) {
         log.debug("REST request to get Event : {}", id);
-        EventDTO eventDTO = eventService.findOne(id);
-        return Optional.ofNullable(eventDTO)
-            .map(result -> new ResponseEntity<>(
-                result,
-                HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return eventResource.getEvent(id);
     }
 
 
@@ -224,16 +182,8 @@ public class PublicResource {
     @Timed
     public ResponseEntity<EventDTO> buildEvent(@PathVariable Long id) {
         log.debug("REST request to get Event : {}", id);
-        EventDTO eventDTO = eventService.buildById(id);
-        return Optional.ofNullable(eventDTO)
-            .map(result -> new ResponseEntity<>(
-                result,
-                HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return eventResource.buildEvent(id);
     }
-
-
-
 
 
 }
