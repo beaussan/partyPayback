@@ -2,7 +2,9 @@ package me.nbeaussart.payback.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import me.nbeaussart.payback.domain.Event;
+import me.nbeaussart.payback.domain.PayBack;
 import me.nbeaussart.payback.service.EventService;
+import me.nbeaussart.payback.service.PayBackService;
 import me.nbeaussart.payback.web.rest.util.HeaderUtil;
 import me.nbeaussart.payback.web.rest.util.PaginationUtil;
 import me.nbeaussart.payback.web.rest.dto.EventDTO;
@@ -119,6 +121,26 @@ public class EventResource {
     public ResponseEntity<EventDTO> getEvent(@PathVariable Long id) {
         log.debug("REST request to get Event : {}", id);
         EventDTO eventDTO = eventService.findOne(id);
+        return Optional.ofNullable(eventDTO)
+            .map(result -> new ResponseEntity<>(
+                result,
+                HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    /**
+     * GET  /events/:id : get the "id" event.
+     *
+     * @param id the id of the eventDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the eventDTO, or with status 404 (Not Found)
+     */
+    @RequestMapping(value = "/events/{id}/build",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<EventDTO> buildEvent(@PathVariable Long id) {
+        log.debug("REST request to get Event : {}", id);
+        EventDTO eventDTO = eventService.buildById(id);
         return Optional.ofNullable(eventDTO)
             .map(result -> new ResponseEntity<>(
                 result,

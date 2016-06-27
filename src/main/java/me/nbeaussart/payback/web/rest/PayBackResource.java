@@ -104,6 +104,7 @@ public class PayBackResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/pay-backs");
         return new ResponseEntity<>(payBackMapper.payBacksToPayBackDTOs(page.getContent()), headers, HttpStatus.OK);
     }
+
     /**
      * GET  /initial-payments : get all the payBacks.
      *

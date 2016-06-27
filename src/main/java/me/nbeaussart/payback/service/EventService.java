@@ -1,6 +1,7 @@
 package me.nbeaussart.payback.service;
 
 import me.nbeaussart.payback.domain.Event;
+import me.nbeaussart.payback.domain.PayBack;
 import me.nbeaussart.payback.repository.EventRepository;
 import me.nbeaussart.payback.web.rest.dto.EventDTO;
 import me.nbeaussart.payback.web.rest.mapper.EventMapper;
@@ -30,6 +31,10 @@ public class EventService {
 
     @Inject
     private EventMapper eventMapper;
+
+
+    @Inject
+    private PayBackService payBackService;
 
     /**
      * Save a event.
@@ -80,5 +85,24 @@ public class EventService {
     public void delete(Long id) {
         log.debug("Request to delete Event : {}", id);
         eventRepository.delete(id);
+    }
+
+    /**
+     * Build all the paybacks for the event
+     * @param id the id of the entity
+     * @return the entity build
+     */
+    public EventDTO buildById(Long id) {
+        log.debug("Request to build event : {}", id);
+        Event event = eventRepository.findOneWithEagerRelationships(id);
+
+        //TODO logic here
+
+        //n'oublie pas de sauvegarder les paybacks :
+        // payBackService.save(new PayBack());
+
+
+        EventDTO eventDTO = eventMapper.eventToEventDTO(event);
+        return eventDTO;
     }
 }

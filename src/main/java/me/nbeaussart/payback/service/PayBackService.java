@@ -44,6 +44,18 @@ public class PayBackService {
         PayBackDTO result = payBackMapper.payBackToPayBackDTO(payBack);
         return result;
     }
+    /**
+     * Save a payBack.
+     *
+     * @param payBack the entity to save
+     * @return the persisted entity
+     */
+    public PayBackDTO save(PayBack payBack) {
+        log.debug("Request to save PayBack : {}", payBack);
+        payBack = payBackRepository.save(payBack);
+        PayBackDTO result = payBackMapper.payBackToPayBackDTO(payBack);
+        return result;
+    }
 
     /**
      *  Get all the payBacks.

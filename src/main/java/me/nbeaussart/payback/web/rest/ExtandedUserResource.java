@@ -30,10 +30,10 @@ import java.util.Optional;
 public class ExtandedUserResource {
 
     private final Logger log = LoggerFactory.getLogger(ExtandedUserResource.class);
-        
+
     @Inject
     private ExtandedUserService extandedUserService;
-    
+
     /**
      * POST  /extanded-users : Create a new extandedUser.
      *
@@ -94,7 +94,7 @@ public class ExtandedUserResource {
     public ResponseEntity<List<ExtandedUser>> getAllExtandedUsers(Pageable pageable)
         throws URISyntaxException {
         log.debug("REST request to get a page of ExtandedUsers");
-        Page<ExtandedUser> page = extandedUserService.findAll(pageable); 
+        Page<ExtandedUser> page = extandedUserService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/extanded-users");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
@@ -118,6 +118,8 @@ public class ExtandedUserResource {
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+
 
     /**
      * DELETE  /extanded-users/:id : delete the "id" extandedUser.
