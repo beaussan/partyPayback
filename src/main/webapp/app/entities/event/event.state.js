@@ -55,7 +55,7 @@
             parent: 'entity',
             url: '/event/{id}',
             data: {
-                authorities: ['ROLE_USER'],
+                //authorities: ['ROLE_USER'],
                 pageTitle: 'partyPaybackApp.event.detail.title'
             },
             views: {

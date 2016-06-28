@@ -22,8 +22,10 @@
             "sendinEmail": "Sendin Email",
             "participants": "Participants",
             "initialPayiment": "Initial Payiment",
+            "initialPayiments": "Initial Payiments",
             "payback": "Payback",
-            "owner": "Owner"
+            "owner": "Owner",
+            "initHasPaid": "{{ toPay }} has given {{ amount }} €"
         }
     }
 }

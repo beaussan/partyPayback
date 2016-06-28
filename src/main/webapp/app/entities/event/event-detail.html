@@ -23,12 +23,20 @@
         <dt><span translate="partyPaybackApp.event.participants">Participants</span></dt>
         <dd>
             <span ng-repeat="participants in vm.event.participants">
-                <a ui-sref="extanded-user-detail({id: {{participants.id}}})">{{participants.id}}</a>{{$last ? '' : ', '}}
+                <a ui-sref="extanded-user-detail({id: {{participants.id}}})">{{participants.name}}</a> <a href="mailto:{{participants.email}}">({{participants.email}})</a>{{$last ? '' : ', '}}
             </span>
         </dd>
         <dt><span translate="partyPaybackApp.event.owner">Owner</span></dt>
         <dd>
-            <a ui-sref="extanded-user-detail({id:vm.event.ownerId})">{{vm.event.ownerId}}</a>
+            <a ui-sref="extanded-user-detail({id:vm.event.ownerId})">{{vm.findUser(vm.event.ownerId).name}}</a>  <a href="mailto:{{vm.findUser(vm.event.ownerId).email}}">({{vm.findUser(vm.event.ownerId).email}})</a>
+        </dd>
+
+        <dt><span translate="partyPaybackApp.event.initialPayiments">Initials payments</span></dt>
+        <dd ng-repeat="inits in vm.initials">
+            <span translate="partyPaybackApp.event.initHasPaid"  translate-values="{amount: '{{inits.ammount}}', toPay: '{{vm.findUser(inits.userId).name}}' }">
+                {{inits.ammount}}€ à {{vm.findUser(inits.userId).name}}
+            </span>
+
         </dd>
     </dl>
     <pre>Event : {{vm.event | json}}</pre>

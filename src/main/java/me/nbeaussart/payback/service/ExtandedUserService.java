@@ -2,6 +2,7 @@ package me.nbeaussart.payback.service;
 
 import me.nbeaussart.payback.domain.ExtandedUser;
 import me.nbeaussart.payback.repository.ExtandedUserRepository;
+import me.nbeaussart.payback.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -20,32 +21,38 @@ import java.util.List;
 public class ExtandedUserService {
 
     private final Logger log = LoggerFactory.getLogger(ExtandedUserService.class);
-    
+
     @Inject
     private ExtandedUserRepository extandedUserRepository;
-    
+
+    @Inject
+    private UserRepository userRepository;
+
     /**
      * Save a extandedUser.
-     * 
+     *
      * @param extandedUser the entity to save
      * @return the persisted entity
      */
     public ExtandedUser save(ExtandedUser extandedUser) {
         log.debug("Request to save ExtandedUser : {}", extandedUser);
+        if (extandedUser.getEmail() != null){
+            userRepository.findOneByEmail(extandedUser.getEmail()).ifPresent(extandedUser::setUser);
+        }
         ExtandedUser result = extandedUserRepository.save(extandedUser);
         return result;
     }
 
     /**
      *  Get all the extandedUsers.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public Page<ExtandedUser> findAll(Pageable pageable) {
         log.debug("Request to get all ExtandedUsers");
-        Page<ExtandedUser> result = extandedUserRepository.findAll(pageable); 
+        Page<ExtandedUser> result = extandedUserRepository.findAll(pageable);
         return result;
     }
 
@@ -55,7 +62,7 @@ public class ExtandedUserService {
      *  @param id the id of the entity
      *  @return the entity
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public ExtandedUser findOne(Long id) {
         log.debug("Request to get ExtandedUser : {}", id);
         ExtandedUser extandedUser = extandedUserRepository.findOne(id);
@@ -64,7 +71,7 @@ public class ExtandedUserService {
 
     /**
      *  Delete the  extandedUser by id.
-     *  
+     *
      *  @param id the id of the entity
      */
     public void delete(Long id) {
