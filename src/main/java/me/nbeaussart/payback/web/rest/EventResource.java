@@ -129,9 +129,9 @@ public class EventResource {
     }
 
     /**
-     * GET  /events/:id : get the "id" event.
+     * GET  /events/:id/build : build the event with this "id".
      *
-     * @param id the id of the eventDTO to retrieve
+     * @param id the id of the eventDTO to build
      * @return the ResponseEntity with status 200 (OK) and with body the eventDTO, or with status 404 (Not Found)
      */
     @RequestMapping(value = "/events/{id}/build",
