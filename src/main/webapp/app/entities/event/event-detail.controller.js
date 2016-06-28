@@ -18,6 +18,11 @@
         if (entity.id){
             vm.initials = InitialPayment.byEvent({ eventId:entity.id });
             vm.paybacks = PayBack.byEvent({ eventId:entity.id });
+            if (vm.paybacks.length === 0){
+                entity.$build({id:entity.id},function () {
+                    vm.paybacks = PayBack.byEvent({ eventId:entity.id });
+                });
+            }
         }
 
         var unsubscribe = $rootScope.$on('partyPaybackApp:eventUpdate', function(event, result) {
