@@ -25,6 +25,9 @@ public class PayBack implements Serializable {
     @Column(name = "timestamp")
     private ZonedDateTime timestamp;
 
+    @Column(name = "is_paid")
+    private Boolean isPaid;
+
     @ManyToOne
     private ExtandedUser source;
 
@@ -56,6 +59,14 @@ public class PayBack implements Serializable {
 
     public void setTimestamp(ZonedDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public Boolean isIsPaid() {
+        return isPaid;
+    }
+
+    public void setIsPaid(Boolean isPaid) {
+        this.isPaid = isPaid;
     }
 
     public ExtandedUser getSource() {
@@ -108,6 +119,7 @@ public class PayBack implements Serializable {
             "id=" + id +
             ", ammount='" + ammount + "'" +
             ", timestamp='" + timestamp + "'" +
+            ", isPaid='" + isPaid + "'" +
             '}';
     }
 }

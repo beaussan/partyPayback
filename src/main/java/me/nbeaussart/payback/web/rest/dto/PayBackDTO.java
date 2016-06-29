@@ -18,13 +18,15 @@ public class PayBackDTO implements Serializable {
 
     private ZonedDateTime timestamp;
 
+    private Boolean isPaid;
+
 
     private Long sourceId;
-
+    
     private Long toPayId;
-
+    
     private Long eventId;
-
+    
     public Long getId() {
         return id;
     }
@@ -45,6 +47,13 @@ public class PayBackDTO implements Serializable {
 
     public void setTimestamp(ZonedDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+    public Boolean getIsPaid() {
+        return isPaid;
+    }
+
+    public void setIsPaid(Boolean isPaid) {
+        this.isPaid = isPaid;
     }
 
     public Long getSourceId() {
@@ -98,6 +107,7 @@ public class PayBackDTO implements Serializable {
             "id=" + id +
             ", ammount='" + ammount + "'" +
             ", timestamp='" + timestamp + "'" +
+            ", isPaid='" + isPaid + "'" +
             '}';
     }
 }

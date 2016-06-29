@@ -58,6 +58,9 @@ public class PayBackResourceIntTest {
     private static final ZonedDateTime UPDATED_TIMESTAMP = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
     private static final String DEFAULT_TIMESTAMP_STR = dateTimeFormatter.format(DEFAULT_TIMESTAMP);
 
+    private static final Boolean DEFAULT_IS_PAID = false;
+    private static final Boolean UPDATED_IS_PAID = true;
+
     @Inject
     private PayBackRepository payBackRepository;
 
@@ -93,6 +96,7 @@ public class PayBackResourceIntTest {
         payBack = new PayBack();
         payBack.setAmmount(DEFAULT_AMMOUNT);
         payBack.setTimestamp(DEFAULT_TIMESTAMP);
+        payBack.setIsPaid(DEFAULT_IS_PAID);
     }
 
     @Test
@@ -114,6 +118,7 @@ public class PayBackResourceIntTest {
         PayBack testPayBack = payBacks.get(payBacks.size() - 1);
         assertThat(testPayBack.getAmmount()).isEqualTo(DEFAULT_AMMOUNT);
         assertThat(testPayBack.getTimestamp()).isEqualTo(DEFAULT_TIMESTAMP);
+        assertThat(testPayBack.isIsPaid()).isEqualTo(DEFAULT_IS_PAID);
     }
 
     @Test
@@ -128,7 +133,8 @@ public class PayBackResourceIntTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(payBack.getId().intValue())))
                 .andExpect(jsonPath("$.[*].ammount").value(hasItem(DEFAULT_AMMOUNT.doubleValue())))
-                .andExpect(jsonPath("$.[*].timestamp").value(hasItem(DEFAULT_TIMESTAMP_STR)));
+                .andExpect(jsonPath("$.[*].timestamp").value(hasItem(DEFAULT_TIMESTAMP_STR)))
+                .andExpect(jsonPath("$.[*].isPaid").value(hasItem(DEFAULT_IS_PAID.booleanValue())));
     }
 
     @Test
@@ -143,7 +149,8 @@ public class PayBackResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(payBack.getId().intValue()))
             .andExpect(jsonPath("$.ammount").value(DEFAULT_AMMOUNT.doubleValue()))
-            .andExpect(jsonPath("$.timestamp").value(DEFAULT_TIMESTAMP_STR));
+            .andExpect(jsonPath("$.timestamp").value(DEFAULT_TIMESTAMP_STR))
+            .andExpect(jsonPath("$.isPaid").value(DEFAULT_IS_PAID.booleanValue()));
     }
 
     @Test
@@ -166,6 +173,7 @@ public class PayBackResourceIntTest {
         updatedPayBack.setId(payBack.getId());
         updatedPayBack.setAmmount(UPDATED_AMMOUNT);
         updatedPayBack.setTimestamp(UPDATED_TIMESTAMP);
+        updatedPayBack.setIsPaid(UPDATED_IS_PAID);
         PayBackDTO payBackDTO = payBackMapper.payBackToPayBackDTO(updatedPayBack);
 
         restPayBackMockMvc.perform(put("/api/pay-backs")
@@ -179,6 +187,7 @@ public class PayBackResourceIntTest {
         PayBack testPayBack = payBacks.get(payBacks.size() - 1);
         assertThat(testPayBack.getAmmount()).isEqualTo(UPDATED_AMMOUNT);
         assertThat(testPayBack.getTimestamp()).isEqualTo(UPDATED_TIMESTAMP);
+        assertThat(testPayBack.isIsPaid()).isEqualTo(UPDATED_IS_PAID);
     }
 
     @Test

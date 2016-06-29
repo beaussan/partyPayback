@@ -18,6 +18,7 @@
             },
             "ammount": "Ammount",
             "timestamp": "Timestamp",
+            "isPaid": "Is Paid",
             "source": "Source",
             "toPay": "To Pay",
             "event": "Event"
