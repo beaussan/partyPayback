@@ -67,7 +67,7 @@ class PayBackGatlingTest extends Simulation {
             .exec(http("Create new payBack")
             .post("/api/pay-backs")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "ammount":null, "timestamp":"2020-01-01T00:00:00.000Z"}""")).asJSON
+            .body(StringBody("""{"id":null, "ammount":null, "timestamp":"2020-01-01T00:00:00.000Z", "isPaid":null}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_payBack_url"))).exitHereIfFailed
             .pause(10)

@@ -4,6 +4,8 @@ import me.nbeaussart.payback.PartyPaybackApp;
 import me.nbeaussart.payback.domain.ExtandedUser;
 import me.nbeaussart.payback.repository.ExtandedUserRepository;
 import me.nbeaussart.payback.service.ExtandedUserService;
+import me.nbeaussart.payback.web.rest.dto.ExtandedUserDTO;
+import me.nbeaussart.payback.web.rest.mapper.ExtandedUserMapper;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -54,6 +56,9 @@ public class ExtandedUserResourceIntTest {
     private ExtandedUserRepository extandedUserRepository;
 
     @Inject
+    private ExtandedUserMapper extandedUserMapper;
+
+    @Inject
     private ExtandedUserService extandedUserService;
 
     @Inject
@@ -71,6 +76,7 @@ public class ExtandedUserResourceIntTest {
         MockitoAnnotations.initMocks(this);
         ExtandedUserResource extandedUserResource = new ExtandedUserResource();
         ReflectionTestUtils.setField(extandedUserResource, "extandedUserService", extandedUserService);
+        ReflectionTestUtils.setField(extandedUserResource, "extandedUserMapper", extandedUserMapper);
         this.restExtandedUserMockMvc = MockMvcBuilders.standaloneSetup(extandedUserResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setMessageConverters(jacksonMessageConverter).build();
@@ -90,10 +96,11 @@ public class ExtandedUserResourceIntTest {
         int databaseSizeBeforeCreate = extandedUserRepository.findAll().size();
 
         // Create the ExtandedUser
+        ExtandedUserDTO extandedUserDTO = extandedUserMapper.extandedUserToExtandedUserDTO(extandedUser);
 
         restExtandedUserMockMvc.perform(post("/api/extanded-users")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(extandedUser)))
+                .content(TestUtil.convertObjectToJsonBytes(extandedUserDTO)))
                 .andExpect(status().isCreated());
 
         // Validate the ExtandedUser in the database
@@ -113,10 +120,11 @@ public class ExtandedUserResourceIntTest {
         extandedUser.setName(null);
 
         // Create the ExtandedUser, which fails.
+        ExtandedUserDTO extandedUserDTO = extandedUserMapper.extandedUserToExtandedUserDTO(extandedUser);
 
         restExtandedUserMockMvc.perform(post("/api/extanded-users")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(extandedUser)))
+                .content(TestUtil.convertObjectToJsonBytes(extandedUserDTO)))
                 .andExpect(status().isBadRequest());
 
         List<ExtandedUser> extandedUsers = extandedUserRepository.findAll();
@@ -167,8 +175,7 @@ public class ExtandedUserResourceIntTest {
     @Transactional
     public void updateExtandedUser() throws Exception {
         // Initialize the database
-        extandedUserService.save(extandedUser);
-
+        extandedUserRepository.saveAndFlush(extandedUser);
         int databaseSizeBeforeUpdate = extandedUserRepository.findAll().size();
 
         // Update the extandedUser
@@ -177,10 +184,11 @@ public class ExtandedUserResourceIntTest {
         updatedExtandedUser.setName(UPDATED_NAME);
         updatedExtandedUser.setEmail(UPDATED_EMAIL);
         updatedExtandedUser.setSendinEmail(UPDATED_SENDIN_EMAIL);
+        ExtandedUserDTO extandedUserDTO = extandedUserMapper.extandedUserToExtandedUserDTO(updatedExtandedUser);
 
         restExtandedUserMockMvc.perform(put("/api/extanded-users")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(updatedExtandedUser)))
+                .content(TestUtil.convertObjectToJsonBytes(extandedUserDTO)))
                 .andExpect(status().isOk());
 
         // Validate the ExtandedUser in the database
@@ -196,8 +204,7 @@ public class ExtandedUserResourceIntTest {
     @Transactional
     public void deleteExtandedUser() throws Exception {
         // Initialize the database
-        extandedUserService.save(extandedUser);
-
+        extandedUserRepository.saveAndFlush(extandedUser);
         int databaseSizeBeforeDelete = extandedUserRepository.findAll().size();
 
         // Get the extandedUser

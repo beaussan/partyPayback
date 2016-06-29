@@ -22,6 +22,8 @@ public class ExtandedUserDTO implements Serializable {
     private Boolean sendinEmail;
 
 
+    private Long userId;
+    
     public Long getId() {
         return id;
     }
@@ -49,6 +51,14 @@ public class ExtandedUserDTO implements Serializable {
 
     public void setSendinEmail(Boolean sendinEmail) {
         this.sendinEmail = sendinEmail;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override

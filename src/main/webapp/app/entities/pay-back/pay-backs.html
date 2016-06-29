@@ -21,6 +21,7 @@
                     <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="ammount"><span translate="partyPaybackApp.payBack.ammount">Ammount</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="timestamp"><span translate="partyPaybackApp.payBack.timestamp">Timestamp</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="isPaid"><span translate="partyPaybackApp.payBack.isPaid">Is Paid</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="sourceId"><span translate="partyPaybackApp.payBack.source">Source</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="toPayId"><span translate="partyPaybackApp.payBack.toPay">To Pay</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="eventId"><span translate="partyPaybackApp.payBack.event">Event</span> <span class="glyphicon glyphicon-sort"></span></th>
@@ -32,6 +33,7 @@
                     <td><a ui-sref="pay-back-detail({id:payBack.id})">{{payBack.id}}</a></td>
                     <td>{{payBack.ammount}}</td>
                     <td>{{payBack.timestamp | date:'medium'}}</td>
+                    <td>{{payBack.isPaid}}</td>
                     <td>
                         <a ui-sref="extanded-user-detail({id:payBack.sourceId})">{{payBack.sourceId}}</a>
                     </td>

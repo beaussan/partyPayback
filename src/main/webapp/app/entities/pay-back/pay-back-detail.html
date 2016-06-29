@@ -12,6 +12,10 @@
         <dd>
             <span>{{vm.payBack.timestamp | date:'medium'}}</span>
         </dd>
+        <dt><span translate="partyPaybackApp.payBack.isPaid">Is Paid</span></dt>
+        <dd>
+            <span>{{vm.payBack.isPaid}}</span>
+        </dd>
         <dt><span translate="partyPaybackApp.payBack.source">Source</span></dt>
         <dd>
             <a ui-sref="extanded-user-detail({id:vm.payBack.sourceId})">{{vm.payBack.sourceId}}</a>

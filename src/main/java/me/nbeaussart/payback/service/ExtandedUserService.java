@@ -2,7 +2,8 @@ package me.nbeaussart.payback.service;
 
 import me.nbeaussart.payback.domain.ExtandedUser;
 import me.nbeaussart.payback.repository.ExtandedUserRepository;
-import me.nbeaussart.payback.repository.UserRepository;
+import me.nbeaussart.payback.web.rest.dto.ExtandedUserDTO;
+import me.nbeaussart.payback.web.rest.mapper.ExtandedUserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -11,7 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing ExtandedUser.
@@ -21,38 +24,37 @@ import java.util.List;
 public class ExtandedUserService {
 
     private final Logger log = LoggerFactory.getLogger(ExtandedUserService.class);
-
+    
     @Inject
     private ExtandedUserRepository extandedUserRepository;
-
+    
     @Inject
-    private UserRepository userRepository;
-
+    private ExtandedUserMapper extandedUserMapper;
+    
     /**
      * Save a extandedUser.
-     *
-     * @param extandedUser the entity to save
+     * 
+     * @param extandedUserDTO the entity to save
      * @return the persisted entity
      */
-    public ExtandedUser save(ExtandedUser extandedUser) {
-        log.debug("Request to save ExtandedUser : {}", extandedUser);
-        if (extandedUser.getEmail() != null){
-            userRepository.findOneByEmail(extandedUser.getEmail()).ifPresent(extandedUser::setUser);
-        }
-        ExtandedUser result = extandedUserRepository.save(extandedUser);
+    public ExtandedUserDTO save(ExtandedUserDTO extandedUserDTO) {
+        log.debug("Request to save ExtandedUser : {}", extandedUserDTO);
+        ExtandedUser extandedUser = extandedUserMapper.extandedUserDTOToExtandedUser(extandedUserDTO);
+        extandedUser = extandedUserRepository.save(extandedUser);
+        ExtandedUserDTO result = extandedUserMapper.extandedUserToExtandedUserDTO(extandedUser);
         return result;
     }
 
     /**
      *  Get all the extandedUsers.
-     *
+     *  
      *  @param pageable the pagination information
      *  @return the list of entities
      */
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true) 
     public Page<ExtandedUser> findAll(Pageable pageable) {
         log.debug("Request to get all ExtandedUsers");
-        Page<ExtandedUser> result = extandedUserRepository.findAll(pageable);
+        Page<ExtandedUser> result = extandedUserRepository.findAll(pageable); 
         return result;
     }
 
@@ -62,16 +64,17 @@ public class ExtandedUserService {
      *  @param id the id of the entity
      *  @return the entity
      */
-    @Transactional(readOnly = true)
-    public ExtandedUser findOne(Long id) {
+    @Transactional(readOnly = true) 
+    public ExtandedUserDTO findOne(Long id) {
         log.debug("Request to get ExtandedUser : {}", id);
         ExtandedUser extandedUser = extandedUserRepository.findOne(id);
-        return extandedUser;
+        ExtandedUserDTO extandedUserDTO = extandedUserMapper.extandedUserToExtandedUserDTO(extandedUser);
+        return extandedUserDTO;
     }
 
     /**
      *  Delete the  extandedUser by id.
-     *
+     *  
      *  @param id the id of the entity
      */
     public void delete(Long id) {

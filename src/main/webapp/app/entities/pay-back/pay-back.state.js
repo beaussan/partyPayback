@@ -93,6 +93,7 @@
                             return {
                                 ammount: null,
                                 timestamp: null,
+                                isPaid: null,
                                 id: null
                             };
                         }

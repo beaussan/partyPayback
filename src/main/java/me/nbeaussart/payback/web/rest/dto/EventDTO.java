@@ -28,7 +28,7 @@ public class EventDTO implements Serializable {
     private Set<ExtandedUserDTO> participants = new HashSet<>();
 
     private Long ownerId;
-
+    
     public Long getId() {
         return id;
     }
