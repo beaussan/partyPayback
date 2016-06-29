@@ -23,7 +23,7 @@
     }
   ],
   "changelogDate": "20160624150852",
-  "dto": "no",
+  "dto": "mapstruct",
   "pagination": "pagination",
   "service": "serviceClass",
   "entityTableName": "initial_payment"

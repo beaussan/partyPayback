@@ -19,7 +19,8 @@ entity InitialPayment {
 
 entity PayBack {
     ammount Double,
-    timestamp ZonedDateTime
+    timestamp ZonedDateTime,
+    isPaid Boolean
 }
 
 relationship OneToOne {
@@ -54,6 +55,6 @@ relationship OneToMany {
 
 paginate all with pagination
 
-//dto all with mapstruct
+dto all with mapstruct
 
-service all with serviceClass   
+service all with serviceClass

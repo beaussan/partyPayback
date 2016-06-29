@@ -32,10 +32,15 @@
       "fieldId": 2,
       "fieldName": "timestamp",
       "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldId": 3,
+      "fieldName": "isPaid",
+      "fieldType": "Boolean"
     }
   ],
   "changelogDate": "20160624150853",
-  "dto": "no",
+  "dto": "mapstruct",
   "pagination": "pagination",
   "service": "serviceClass",
   "entityTableName": "pay_back"
