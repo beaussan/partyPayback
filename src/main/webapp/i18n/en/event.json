@@ -25,7 +25,7 @@
             "initialPayiments": "Initial Payiments",
             "payback": "Payback",
             "owner": "Owner",
-            "initHasPaid": "{{ toPay }} has given {{ amount }} €"
+            "initHasPaid": "{{ toPay }} give {{ amount }}"
         }
     }
 }

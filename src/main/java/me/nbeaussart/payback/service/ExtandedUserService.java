@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.inject.Inject;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -24,16 +25,16 @@ import java.util.stream.Collectors;
 public class ExtandedUserService {
 
     private final Logger log = LoggerFactory.getLogger(ExtandedUserService.class);
-    
+
     @Inject
     private ExtandedUserRepository extandedUserRepository;
-    
+
     @Inject
     private ExtandedUserMapper extandedUserMapper;
-    
+
     /**
      * Save a extandedUser.
-     * 
+     *
      * @param extandedUserDTO the entity to save
      * @return the persisted entity
      */
@@ -45,16 +46,30 @@ public class ExtandedUserService {
         return result;
     }
 
+    public ExtandedUserDTO createNew(ExtandedUserDTO extandedUserDTO){
+        log.debug("Reques to create ExtendedUser : {}", extandedUserDTO);
+
+        ExtandedUser extandedUser = extandedUserRepository.findOneByEmail(extandedUserDTO.getEmail()).orElseGet(() -> {
+            ExtandedUser extandedUserToSave = extandedUserMapper.extandedUserDTOToExtandedUser(extandedUserDTO);
+            return extandedUserRepository.save(extandedUserToSave);
+        });
+
+        ExtandedUserDTO result = extandedUserMapper.extandedUserToExtandedUserDTO(extandedUser);
+        return result;
+
+
+    }
+
     /**
      *  Get all the extandedUsers.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public Page<ExtandedUser> findAll(Pageable pageable) {
         log.debug("Request to get all ExtandedUsers");
-        Page<ExtandedUser> result = extandedUserRepository.findAll(pageable); 
+        Page<ExtandedUser> result = extandedUserRepository.findAll(pageable);
         return result;
     }
 
@@ -64,7 +79,7 @@ public class ExtandedUserService {
      *  @param id the id of the entity
      *  @return the entity
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public ExtandedUserDTO findOne(Long id) {
         log.debug("Request to get ExtandedUser : {}", id);
         ExtandedUser extandedUser = extandedUserRepository.findOne(id);
@@ -74,7 +89,7 @@ public class ExtandedUserService {
 
     /**
      *  Delete the  extandedUser by id.
-     *  
+     *
      *  @param id the id of the entity
      */
     public void delete(Long id) {

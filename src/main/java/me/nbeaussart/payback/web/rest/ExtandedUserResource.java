@@ -34,13 +34,13 @@ import java.util.stream.Collectors;
 public class ExtandedUserResource {
 
     private final Logger log = LoggerFactory.getLogger(ExtandedUserResource.class);
-        
+
     @Inject
     private ExtandedUserService extandedUserService;
-    
+
     @Inject
     private ExtandedUserMapper extandedUserMapper;
-    
+
     /**
      * POST  /extanded-users : Create a new extandedUser.
      *
@@ -57,7 +57,7 @@ public class ExtandedUserResource {
         if (extandedUserDTO.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("extandedUser", "idexists", "A new extandedUser cannot already have an ID")).body(null);
         }
-        ExtandedUserDTO result = extandedUserService.save(extandedUserDTO);
+        ExtandedUserDTO result = extandedUserService.createNew(extandedUserDTO);
         return ResponseEntity.created(new URI("/api/extanded-users/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("extandedUser", result.getId().toString()))
             .body(result);
@@ -101,7 +101,7 @@ public class ExtandedUserResource {
     public ResponseEntity<List<ExtandedUserDTO>> getAllExtandedUsers(Pageable pageable)
         throws URISyntaxException {
         log.debug("REST request to get a page of ExtandedUsers");
-        Page<ExtandedUser> page = extandedUserService.findAll(pageable); 
+        Page<ExtandedUser> page = extandedUserService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/extanded-users");
         return new ResponseEntity<>(extandedUserMapper.extandedUsersToExtandedUserDTOs(page.getContent()), headers, HttpStatus.OK);
     }

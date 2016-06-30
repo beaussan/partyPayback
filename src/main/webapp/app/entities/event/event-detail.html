@@ -18,7 +18,10 @@
         </dd>
         <dt><span translate="partyPaybackApp.event.sendinEmail">Sendin Email</span></dt>
         <dd>
-            <span>{{vm.event.sendinEmail}}</span>
+
+            <md-checkbox  ng-disabled="true" ng-model="vm.event.sendinEmail" aria-label="Checkbox 1">
+            </md-checkbox>
+
         </dd>
         <dt><span translate="partyPaybackApp.event.participants">Participants</span></dt>
         <dd>
@@ -33,7 +36,7 @@
 
         <dt><span translate="partyPaybackApp.event.initialPayiments">Initials payments</span></dt>
         <dd ng-repeat="inits in vm.initials">
-            <span translate="partyPaybackApp.event.initHasPaid"  translate-values="{amount: '{{inits.ammount}}', toPay: '{{vm.findUser(inits.userId).name}}' }">
+            <span translate="partyPaybackApp.event.initHasPaid"  translate-values="{amount: '{{inits.ammount | currency : '€'}}', toPay: '{{vm.findUser(inits.userId).name}}' }">
                 {{inits.ammount}}€ à {{vm.findUser(inits.userId).name}}
             </span>
 
