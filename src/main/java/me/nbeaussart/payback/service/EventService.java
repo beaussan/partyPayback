@@ -161,8 +161,8 @@ public class EventService {
         	}
         }
         
-        creditors.entrySet().stream().sorted(Map.Entry.<ExtandedUser, Double>comparingByValue().reversed());
-        debtors.entrySet().stream().sorted(Map.Entry.<ExtandedUser, Double>comparingByValue().reversed());
+        creditors.entrySet().stream().sorted(Map.Entry.<ExtandedUser, Double>comparingByValue());
+        debtors.entrySet().stream().sorted(Map.Entry.<ExtandedUser, Double>comparingByValue());
         
         for (Entry<ExtandedUser, Double> creditor : creditors.entrySet()){
         	Double solde = creditor.getValue();
