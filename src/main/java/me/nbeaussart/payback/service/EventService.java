@@ -175,8 +175,10 @@ public class EventService {
         		if (debt <= 0){
         			debtor.setValue(Math.abs(debt));
         			payback.setAmmount(Math.abs(solde));
+        			solde -= Math.abs(solde);
         		} else {
         			payback.setAmmount(debtor.getValue());
+        			solde -= Math.abs(debtor.getValue());
         			debtors.remove(debtor.getKey());
         		}
         		
