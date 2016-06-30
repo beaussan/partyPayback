@@ -169,19 +169,21 @@ public class EventService {
         for (Entry<ExtandedUser, Double> creditor : creditors.entrySet()){
         	Double solde = creditor.getValue();
         	while (solde > 0){
+        		PayBack payback = new PayBack();
         		Entry<ExtandedUser, Double> debtor = debtors.entrySet().iterator().next();
-        		solde -= debtor.getValue();
-        		if (solde <= 0){
-        			debtor.setValue(Math.abs(solde));
+        		Double debt = solde - debtor.getValue();
+        		if (debt <= 0){
+        			debtor.setValue(Math.abs(debt));
+        			payback.setAmmount(Math.abs(solde));
         		} else {
+        			payback.setAmmount(debtor.getValue());
         			debtors.remove(debtor.getKey());
         		}
-        		PayBack payback = new PayBack();
-        		payback.setAmmount(Math.abs(solde));
+        		
         		payback.setEvent(event);
         		payback.setIsPaid(false);
-        		payback.setSource(creditor.getKey());
-        		payback.setToPay(debtor.getKey());
+        		payback.setSource(debtor.getKey());
+        		payback.setToPay(creditor.getKey());
         		payback.setTimestamp(ZonedDateTime.now());
         		newPayBacks.add(payback);
         		payBackService.save(payback);
