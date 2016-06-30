@@ -2,6 +2,7 @@ package me.nbeaussart.payback.service;
 
 import java.time.ZonedDateTime;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -128,6 +129,7 @@ public class EventService {
         	}
         }
         
+        Set<PayBack> newPayBacks = new HashSet<PayBack>();
         for (PayBack payback : paybacks){
         	if (payback.isIsPaid()){
             	ExtandedUser source = payback.getSource();
@@ -155,9 +157,9 @@ public class EventService {
             	} else {
             		debtors.put(toPay, debtors.get(toPay) + ammount);
             	}
+            	newPayBacks.add(payback);
         	} else {
         		payBackService.delete(payback.getId());
-        		paybacks.remove(payback);
         	}
         }
         
@@ -181,10 +183,11 @@ public class EventService {
         		payback.setSource(creditor.getKey());
         		payback.setToPay(debtor.getKey());
         		payback.setTimestamp(ZonedDateTime.now());
-        		paybacks.add(payback);
+        		newPayBacks.add(payback);
         		payBackService.save(payback);
         	}
         }
+        event.setPaybacks(newPayBacks);
         
         EventDTO eventDTO = eventMapper.eventToEventDTO(event);
         return eventDTO;
