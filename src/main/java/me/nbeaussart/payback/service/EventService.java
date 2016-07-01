@@ -21,6 +21,7 @@ import me.nbeaussart.payback.domain.ExtandedUser;
 import me.nbeaussart.payback.domain.InitialPayment;
 import me.nbeaussart.payback.domain.PayBack;
 import me.nbeaussart.payback.repository.EventRepository;
+import me.nbeaussart.payback.service.util.PayBackProcessHelper;
 import me.nbeaussart.payback.web.rest.dto.EventDTO;
 import me.nbeaussart.payback.web.rest.mapper.EventMapper;
 
@@ -106,91 +107,17 @@ public class EventService {
         Set<InitialPayment> initialPayments = event.getInitialPayiments();
         Set<PayBack> paybacks = event.getPaybacks();
         Set<ExtandedUser> participants = event.getParticipants();
-        Map<ExtandedUser, Double> participantPayment = new HashMap<ExtandedUser, Double>();
-        Double totalAmmount = Double.valueOf(0);
         
-        for (InitialPayment payment : initialPayments){
-        	ExtandedUser user = payment.getUser();
-        	Double ammount = payment.getAmmount();
-        	totalAmmount += ammount;
-        	ammount += participantPayment.containsKey(user) ? participantPayment.get(user) : 0;
-        	participantPayment.put(user, ammount);
-        }
+        PayBackProcessHelper processHelper = new PayBackProcessHelper();
+        Double ammountPerUser = processHelper.getTotalAmmountPerPerson(initialPayments, participants);
+        Map<ExtandedUser, Double> participantPayments = processHelper.getAllPaymentPerPerson(initialPayments);
 
-        Double ammountPerUser = totalAmmount/participants.size();
         Map<ExtandedUser, Double> debtors = new HashMap<ExtandedUser, Double>();
         Map<ExtandedUser, Double> creditors = new HashMap<ExtandedUser, Double>();
-        for (Entry<ExtandedUser, Double> entry : participantPayment.entrySet()){
-        	Double value = ammountPerUser - entry.getValue();
-        	if (value > 0){
-        		debtors.put(entry.getKey(), value);
-        	} else if (value < 0){
-        		creditors.put(entry.getKey(), Math.abs(value));
-        	}
-        }
-        
-        Set<PayBack> newPayBacks = new HashSet<PayBack>();
-        for (PayBack payback : paybacks){
-        	if (payback.isIsPaid()){
-            	ExtandedUser source = payback.getSource();
-            	ExtandedUser toPay = payback.getToPay();
-            	Double ammount = payback.getAmmount();
-            	if (creditors.containsKey(source)){
-            		creditors.put(source, creditors.get(source)+ammount);
-            	} else {
-            		Double newSolde = debtors.get(source)-ammount;
-            		if (newSolde < 0){
-            			debtors.remove(source);
-            			creditors.put(source, Math.abs(newSolde));
-            		} else {
-            			debtors.put(source, newSolde);
-            		}
-            	}
-            	if (creditors.containsKey(toPay)){
-            		Double newSolde = creditors.get(toPay) - ammount;
-            		if (newSolde < 0){
-            			creditors.remove(toPay);
-            			debtors.put(toPay, Math.abs(newSolde));
-            		} else {
-            			creditors.put(toPay, newSolde);
-            		}
-            	} else {
-            		debtors.put(toPay, debtors.get(toPay) + ammount);
-            	}
-            	newPayBacks.add(payback);
-        	} else {
-        		payBackService.delete(payback.getId());
-        	}
-        }
-        
-        creditors.entrySet().stream().sorted(Map.Entry.<ExtandedUser, Double>comparingByValue());
-        debtors.entrySet().stream().sorted(Map.Entry.<ExtandedUser, Double>comparingByValue());
-        
-        for (Entry<ExtandedUser, Double> creditor : creditors.entrySet()){
-        	Double solde = creditor.getValue();
-        	while (solde > 0){
-        		PayBack payback = new PayBack();
-        		Entry<ExtandedUser, Double> debtor = debtors.entrySet().iterator().next();
-        		Double debt = solde - debtor.getValue();
-        		if (debt <= 0){
-        			debtor.setValue(Math.abs(debt));
-        			payback.setAmmount(Math.abs(solde));
-        			solde -= Math.abs(solde);
-        		} else {
-        			payback.setAmmount(debtor.getValue());
-        			solde -= Math.abs(debtor.getValue());
-        			debtors.remove(debtor.getKey());
-        		}
-        		
-        		payback.setEvent(event);
-        		payback.setIsPaid(false);
-        		payback.setSource(debtor.getKey());
-        		payback.setToPay(creditor.getKey());
-        		payback.setTimestamp(ZonedDateTime.now());
-        		newPayBacks.add(payback);
-        		payBackService.save(payback);
-        	}
-        }
+        processHelper.getDebtorsAndCreditors(participantPayments, ammountPerUser, debtors, creditors);
+
+        Set<PayBack> newPayBacks = processHelper.getNewPayBacks(event, paybacks, debtors, creditors, this.payBackService);
+
         event.setPaybacks(newPayBacks);
         
         EventDTO eventDTO = eventMapper.eventToEventDTO(event);
