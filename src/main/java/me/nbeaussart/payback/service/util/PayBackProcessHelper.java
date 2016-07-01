@@ -18,6 +18,13 @@ public class PayBackProcessHelper {
 	public PayBackProcessHelper() {
 	}
 
+	/**
+	 * Calculation of the ammount for one person :
+	 * Sum(AllInitialPayment)/NumberOfParticipant
+	 * @param initialPayments
+	 * @param participants
+	 * @return ammount for one person
+	 */
 	public Double getTotalAmmountPerPerson(Set<InitialPayment> initialPayments, Set<ExtandedUser> participants) {
 		Double totalAmmount = 0D;
 
@@ -28,6 +35,11 @@ public class PayBackProcessHelper {
 		return totalAmmount / participants.size();
 	}
 
+	/**
+	 * Merge all initial payments done by users
+	 * @param initialPayments
+	 * @return A map with key = User, value = totalAmmountPayed
+	 */
 	public Map<ExtandedUser, Double> getAllPaymentPerPerson(Set<InitialPayment> initialPayments) {
 		Map<ExtandedUser, Double> paymentPerPerson = new HashMap<ExtandedUser, Double>();
 		for (InitialPayment initialPayment : initialPayments) {
@@ -39,6 +51,15 @@ public class PayBackProcessHelper {
 		return paymentPerPerson;
 	}
 
+	/**
+	 * Initialization of two Map :
+	 * Creditors : Participants which payed more than the partPerPerson -> Difference between what they payed and the partPerPerson
+	 * Debtors   : Participants which payed less than the partPerPerson -> Difference between the partPerPerson and what they payed
+	 * @param participantPayments
+	 * @param ammountPerUser
+	 * @param debtors
+	 * @param creditors
+	 */
 	public void getDebtorsAndCreditors(Map<ExtandedUser, Double> participantPayments, Double ammountPerUser,
 			Map<ExtandedUser, Double> debtors, Map<ExtandedUser, Double> creditors) {
 		for (Entry<ExtandedUser, Double> entry : participantPayments.entrySet()) {
@@ -51,6 +72,15 @@ public class PayBackProcessHelper {
 		}
 	}
 
+	/**
+	 * Process of creation of new payback
+	 * @param event
+	 * @param paybacks
+	 * @param debtors
+	 * @param creditors
+	 * @param payBackService
+	 * @return The new payBacks
+	 */
 	public Set<PayBack> getNewPayBacks(Event event, Set<PayBack> paybacks, Map<ExtandedUser, Double> debtors, Map<ExtandedUser, Double> creditors, PayBackService payBackService) {
 		Set<PayBack> newPayBacks = new HashSet<PayBack>();
 		
@@ -63,11 +93,26 @@ public class PayBackProcessHelper {
 		
 		return newPayBacks;
 	}
-
+	
+	/**
+	 * Sort the map by values
+	 * @param map
+	 */
 	private void sortMapByValue(Map<ExtandedUser, Double> map) {
         map.entrySet().stream().sorted(Map.Entry.<ExtandedUser, Double>comparingByValue());
 	}
 
+	/**
+	 * This method manage the old payBack :
+	 *  - Remove the old payBack not payed (they will be recalculate with the actual data)
+	 *  - Adjust the maps creditor and debtors according to the payBacks already repay
+	 *  - Transfer the payBack already repay in the newPayBacks
+	 * @param paybacks
+	 * @param debtors
+	 * @param creditors
+	 * @param payBackService
+	 * @param newPayBacks
+	 */
 	private void manageOldPayBacks(Set<PayBack> paybacks, Map<ExtandedUser, Double> debtors,
 			Map<ExtandedUser, Double> creditors, PayBackService payBackService, Set<PayBack> newPayBacks) {
         for (PayBack payback : paybacks){
@@ -104,6 +149,17 @@ public class PayBackProcessHelper {
         }
 	}
 
+	/**
+	 * Creation of new payBack :
+	 * 	- Iterate on the creditors (from the biggest to the lower)
+	 * 		- while the creditor is not fully repay
+	 * 			- Iterate on the debtors and create a new payBack between them
+	 * @param creditors
+	 * @param debtors
+	 * @param event
+	 * @param payBackService
+	 * @param newPayBacks
+	 */
 	private void createNewPayBacks(Map<ExtandedUser, Double> creditors, Map<ExtandedUser, Double> debtors, Event event,
 			PayBackService payBackService, Set<PayBack> newPayBacks) {
         for (Entry<ExtandedUser, Double> creditor : creditors.entrySet()){
@@ -126,6 +182,15 @@ public class PayBackProcessHelper {
         }
 	}
 
+	/**
+	 * Process to save a new PayBack
+	 * @param event
+	 * @param debtor
+	 * @param creditor
+	 * @param payback
+	 * @param newPayBacks
+	 * @param payBackService
+	 */
 	private void saveNewPayBack(Event event, ExtandedUser debtor, ExtandedUser creditor, PayBack payback,
 			Set<PayBack> newPayBacks, PayBackService payBackService) {
 		payback.setEvent(event);
