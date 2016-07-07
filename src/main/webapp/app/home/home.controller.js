@@ -5,17 +5,18 @@
         .module('partyPaybackApp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state'];
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state', '$log'];
 
-    function HomeController ($scope, Principal, LoginService, $state) {
+    function HomeController ($scope, Principal, LoginService, $state, $log) {
         var vm = this;
 
         vm.account = null;
         vm.isAuthenticated = null;
         vm.event = null;
 
-        vm.participants = null;
+        vm.participants = [];
         vm.newParticipant = null;
+        vm.formToClear = null;
 
         vm.login = LoginService.open;
         vm.register = register;
@@ -43,7 +44,11 @@
 
 
         function appendParticipant() {
-            
+            $log.debug(vm.newParticipant);
+            vm.participants.push(vm.newParticipant);
+            vm.newParticipant = null;
+            vm.formToClear.$setPristine();
+            $log.debug(vm.participants);
         }
 
 
