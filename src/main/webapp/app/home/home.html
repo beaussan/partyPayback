@@ -1,148 +1,148 @@
 <div ng-cloak>
-    <div class="row">
-        <div class="col-md-4">
-            <span class="hipster img-responsive img-rounded"></span>
-        </div>
-        <div class="col-md-8">
-            <h1 translate="home.title">Welcome, Party Monster!</h1>
+    <div>
+        <h1 translate="home.title">Welcome, Party Monster!</h1>
 
-            <div ng-switch="vm.isAuthenticated()">
-                <div class="alert alert-success" ng-switch-when="true" translate="home.logged.message" translate-values="{username: '{{vm.account.login}}'}">
-                    You are logged in as user "{{vm.account.login}}".
+        <div ng-switch="vm.isAuthenticated()">
+            <div class="alert alert-success" ng-switch-when="true" translate="home.logged.message" translate-values="{username: '{{vm.account.login}}'}">
+            You are logged in as user "{{vm.account.login}}".
+            </div>
+
+            <div class="alert alert-warning"  ng-switch-when="false" >
+
+                <div translate="global.messages.info.authenticated" translate-compile>
+                Click here to <a class="alert-link" href="" ng-click="vm.login()">sign in</a>.
                 </div>
 
-                <div class="alert alert-warning"  ng-switch-when="false" >
+                <div translate="global.messages.info.register" translate-compile>
+                You don't have an account yet? <a class="alert-link" ui-sref="register">Register a new account</a>
+                </div>
+            </div>
+        </div>
 
-                    <div translate="global.messages.info.authenticated" translate-compile>
-                        Click here to <a class="alert-link" href="" ng-click="vm.login()">sign in</a>.
+
+        <form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+            <div class="row">
+                <div class="form-group col-md-8">
+                    <label class="control-label" translate="partyPaybackApp.event.name" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                           ng-model="vm.event.name"
+                           required />
+                    <div ng-show="editForm.name.$invalid">
+                        <p class="help-block"
+                           ng-show="editForm.name.$error.required" translate="entity.validation.required">
+                            This field is required.
+                        </p>
                     </div>
-
-                    <div translate="global.messages.info.register" translate-compile>
-                        You don't have an account yet? <a class="alert-link" ui-sref="register">Register a new account</a>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="control-label" translate="partyPaybackApp.event.date" for="field_date">Date</label>
+                    <div class="input-group">
+                        <input id="field_date" type="text" class="form-control" name="date" datetime-picker="{{dateformat}}" ng-model="vm.event.date" is-open="vm.datePickerOpenStatus.date"
+                        />
+                    <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="vm.openCalendar('date')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
                     </div>
                 </div>
             </div>
 
 
-            <form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
 
-                <div class="row">
+            <div class="row">
+                <div class="form-group col-md-8">
+                    <label class="control-label" translate="partyPaybackApp.event.location" for="field_location">Location</label>
+                    <input type="text" class="form-control" name="location" id="field_location"
+                    ng-model="vm.event.location"
+                    />
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="control-label" translate="partyPaybackApp.event.sendinEmail" for="field_sendinEmail">Sendin Email</label>
 
-                    <div class="form-group col-md-8">
-                        <label class="control-label" translate="partyPaybackApp.event.name" for="field_name">Name</label>
-                        <input type="text" class="form-control" name="name" id="field_name"
-                               ng-model="vm.event.name"
-                               required />
-                        <div ng-show="editForm.name.$invalid">
-                            <p class="help-block"
-                               ng-show="editForm.name.$error.required" translate="entity.validation.required">
-                                This field is required.
-                            </p>
+                    <input type="checkbox" class="form-control" name="sendinEmail" id="field_sendinEmail"
+                    ng-model="vm.event.sendinEmail"
+                    />
+                </div>
+            </div>
+
+        </form>
+        <md-divider></md-divider>
+
+        <h4>Add a participant</h4>
+
+        <form name="addParticipant" role="form" novalidate ng-submit="vm.appendParticipant()" >
+
+            <div class="row">
+
+                <md-input-container class="md-block col-md-4">
+                    <md-icon md-font-icon="zmdi zmdi-account"></md-icon>
+                    <label for="email">Nom</label>
+                    <input id="name" label="name" name="name" ng-model="vm.newParticipant.name" required/>
+                    <div ng-messages="addParticipant.name.$error" md-auto-hide="false" ng-show="addParticipant.name.$touched">
+                        <div ng-message="required">
+                            <span translate="Please enter a name."></span>
                         </div>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label class="control-label" translate="partyPaybackApp.event.date" for="field_date">Date</label>
-                        <div class="input-group">
-                            <input id="field_date" type="text" class="form-control" name="date" datetime-picker="{{dateformat}}" ng-model="vm.event.date" is-open="vm.datePickerOpenStatus.date"
-                            />
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="vm.openCalendar('date')"><i class="glyphicon glyphicon-calendar"></i></button>
-                            </span>
+                </md-input-container>
+
+                <md-input-container class="md-block col-md-4">
+                    <md-icon md-font-icon="zmdi zmdi-email"></md-icon>
+                    <label for="email">Email</label>
+                    <input id="email" label="email" name="email" type="email" ng-model="vm.newParticipant.email" required/>
+                    <div ng-messages="addParticipant.email.$error" md-auto-hide="false" ng-show="addParticipant.email.$touched">
+                        <div ng-message="required">
+                            <span translate="Please enter an email address."></span>
+                        </div>
+                        <div ng-message="email">
+                            <span translate="Please enter a valid email address."></span>
                         </div>
                     </div>
-                </div>
+                </md-input-container>
 
-                <div class="row">
-                    <div class="form-group col-md-8">
-                        <label class="control-label" translate="partyPaybackApp.event.location" for="field_location">Location</label>
-                        <input type="text" class="form-control" name="location" id="field_location"
-                               ng-model="vm.event.location"
-                        />
+
+                <md-input-container class=" md-block col-md-2">
+                    <md-icon md-font-icon="zmdi zmdi-money"></md-icon>
+                    <label for="paiment">Paiment</label>
+                    <input id="paiment" label="paiment" type="number"  name="paiment" ng-model="vm.newParticipant.paiment" required min="0"/>
+
+
+                    <div ng-messages="addParticipant.paiment.$error" md-auto-hide="false" ng-show="addParticipant.paiment.$touched">
+                        <div ng-message="required">
+                            <span>Please enter an ammount.</span>
+                        </div>
+
+                        <div ng-message="min">
+                            You should charge at least $800 an hour. This job is a big deal... if you mess up,
+                            everyone dies!
+                        </div>
+                        <div ng-message="number">
+                            Please enter a number.
+                        </div>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label class="control-label" translate="partyPaybackApp.event.sendinEmail" for="field_sendinEmail">Sendin Email</label>
+                </md-input-container>
 
-                        <input type="checkbox" class="form-control" name="sendinEmail" id="field_sendinEmail"
-                               ng-model="vm.event.sendinEmail"
-                        />
-                    </div>
-                </div>
+                <md-input-container class="md-block col-md-2">
 
-            </form>
-            <md-divider></md-divider>
+                    <md-switch ng-model="data.cb1" aria-label="Switch 1">
+                        Propriétaire
+                    </md-switch>
+                </md-input-container>
 
-            <h4>Add a participant</h4>
+            </div>
 
-            <form name="addParticipant" role="form" novalidate ng-submit="vm.appendParticipant()" >
+            <div class="row">
 
-                <div class="row">
+            </div>
 
-                    <md-input-container class="md-block col-md-8">
-                        <md-icon md-font-icon="zmdi zmdi-account"></md-icon>
-                        <label for="email">Nom</label>
-                        <input id="name" label="name" name="name" ng-model="vm.newParticipant.name" required/>
-                        <div ng-messages="addParticipant.name.$error" md-auto-hide="false" ng-show="addParticipant.name.$touched">
-                            <div ng-message="required">
-                                <span translate="Please enter a name."></span>
-                            </div>
-                        </div>
-                    </md-input-container>
-
-                    <md-input-container class="md-block col-md-4">
-                        <md-icon md-font-icon="zmdi zmdi-email"></md-icon>
-                        <label for="email">Email</label>
-                        <input id="email" label="email" name="email" type="email" ng-model="vm.newParticipant.email" required/>
-                        <div ng-messages="addParticipant.email.$error" md-auto-hide="false" ng-show="addParticipant.email.$touched">
-                            <div ng-message="required">
-                                <span translate="Please enter an email address."></span>
-                            </div>
-                            <div ng-message="email">
-                                <span translate="Please enter a valid email address."></span>
-                            </div>
-                        </div>
-                    </md-input-container>
-
-                </div>
-
-                <div class="row">
-                    <md-input-container class="md-block md-icon-float  md-icon-right md-block col-md-8">
-                        <md-icon md-font-icon="zmdi zmdi-phone"></md-icon>
-                        <label for="paiment">Paiment</label>
-                        <input id="paiment" label="paiment" type="number"  name="paiment" ng-model="vm.newParticipant.paiment" required min="0"/>
-                        <md-icon md-font-icon="zmdi zmdi-phone"></md-icon>
-                        <div ng-messages="addParticipant.paiment.$error" md-auto-hide="false" ng-show="addParticipant.paiment.$touched">
-                            <div ng-message="required">
-
-                                <span>Please enter an ammount.</span>
-                            </div>
-
-                            <div ng-message="min">
-                                You should charge at least $800 an hour. This job is a big deal... if you mess up,
-                                everyone dies!
-                            </div>
-                            <div ng-message="number">
-                                Please enter a number.
-                            </div>
-                        </div>
-                    </md-input-container>
-
-                    <md-input-container class="md-block col-md-4">
-
-                        <md-switch ng-model="data.cb1" aria-label="Switch 1">
-                            Propriétaire
-                        </md-switch>
-                    </md-input-container>
-
-
-                </div>
+            <md-button ng-click="vm.appendParticipant()" class="md-raised md-primary">Add user</md-button>
 
 
 
 
 
 
-            </form>
+        </form>
 
-        </div>
     </div>
+
 </div>
