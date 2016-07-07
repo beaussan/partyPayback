@@ -70,7 +70,7 @@
 
         <h4>Add a participant</h4>
 
-        <form name="addParticipant" role="form" novalidate ng-submit="vm.appendParticipant()" >
+        <form name="vm.addParticipantForm" role="form" novalidate ng-submit="vm.appendParticipant()"  >
 
             <div class="row">
 
@@ -78,7 +78,7 @@
                     <md-icon md-font-icon="zmdi zmdi-account"></md-icon>
                     <label for="email">Nom</label>
                     <input id="name" label="name" name="name" ng-model="vm.newParticipant.name" required/>
-                    <div ng-messages="addParticipant.name.$error" md-auto-hide="false" ng-show="addParticipant.name.$touched">
+                    <div ng-messages="vm.addParticipantForm.name.$error" md-auto-hide="false" ng-show="vm.addParticipantForm.name.$touched">
                         <div ng-message="required">
                             <span translate="Please enter a name."></span>
                         </div>
@@ -88,8 +88,8 @@
                 <md-input-container class="md-block col-md-4">
                     <md-icon md-font-icon="zmdi zmdi-email"></md-icon>
                     <label for="email">Email</label>
-                    <input id="email" label="email" name="email" type="email" ng-model="vm.newParticipant.email" required/>
-                    <div ng-messages="addParticipant.email.$error" md-auto-hide="false" ng-show="addParticipant.email.$touched">
+                    <input id="email" label="email" name="email" type="email" ng-model="vm.newParticipant.email"/>
+                    <div ng-messages="vm.addParticipantForm.email.$error" md-auto-hide="false" ng-show="vm.addParticipantForm.email.$touched">
                         <div ng-message="required">
                             <span translate="Please enter an email address."></span>
                         </div>
@@ -102,11 +102,12 @@
 
                 <md-input-container class=" md-block col-md-2">
                     <md-icon md-font-icon="zmdi zmdi-money"></md-icon>
-                    <label for="paiment">Paiment</label>
-                    <input id="paiment" label="paiment" type="number"  name="paiment" ng-model="vm.newParticipant.paiment" required min="0"/>
+                    <label>Paiment</label>
+
+                    <input required type="number" name="paiment" ng-model="vm.newParticipant.paiment"  min="0"/>
 
 
-                    <div ng-messages="addParticipant.paiment.$error" md-auto-hide="false" ng-show="addParticipant.paiment.$touched">
+                    <div ng-messages="vm.addParticipantForm.paiment.$error" md-auto-hide="false" ng-show="vm.addParticipantForm.paiment.$touched" >
                         <div ng-message="required">
                             <span>Please enter an ammount.</span>
                         </div>
@@ -124,7 +125,7 @@
                 <md-input-container class="md-block col-md-2">
 
                     <md-switch ng-model="data.cb1" aria-label="Switch 1">
-                        Propriétaire
+                        Owner
                     </md-switch>
                 </md-input-container>
 
@@ -134,11 +135,12 @@
 
             </div>
 
-            <md-button ng-click="vm.appendParticipant()" class="md-raised md-primary">Add user</md-button>
+            <md-button ng-click="vm.appendParticipant()" class="md-raised md-primary"  type="submit" ng-disabled="!vm.addParticipantForm.$valid">Add user</md-button>
 
 
 
             <pre> {{vm.participants | json }}</pre>
+            <pre> {{vm.addParticipantForm | json }}</pre>
 
 
         </form>

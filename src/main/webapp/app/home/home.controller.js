@@ -16,7 +16,7 @@
 
         vm.participants = [];
         vm.newParticipant = null;
-        vm.formToClear = null;
+        vm.addParticipantForm = null;
 
         vm.login = LoginService.open;
         vm.register = register;
@@ -44,11 +44,23 @@
 
 
         function appendParticipant() {
+            if (vm.newParticipant === null){
+                return;
+            }
             $log.debug(vm.newParticipant);
             vm.participants.push(vm.newParticipant);
             vm.newParticipant = null;
-            vm.formToClear.$setPristine();
-            $log.debug(vm.participants);
+            vm.newParticipant.name = null;
+            vm.newParticipant.email = null;
+            vm.newParticipant.paiment = null;
+            vm.addParticipantForm.name.$setPristine();
+            vm.addParticipantForm.name.$setUntouched();
+            vm.addParticipantForm.email.$setPristine();
+            vm.addParticipantForm.email.$setUntouched();
+            vm.addParticipantForm.paiment.$setPristine();
+            vm.addParticipantForm.paiment.$setUntouched();
+            vm.addParticipantForm.$setPristine();
+            vm.addParticipantForm.$setUntouched();
         }
 
 
