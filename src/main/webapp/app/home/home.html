@@ -113,8 +113,7 @@
                         </div>
 
                         <div ng-message="min">
-                            You should charge at least $800 an hour. This job is a big deal... if you mess up,
-                            everyone dies!
+                            You can't give a negative number !
                         </div>
                         <div ng-message="number">
                             Please enter a number.
@@ -132,10 +131,12 @@
             </div>
 
             <div class="row">
+                <div flex></div>
+                <md-button ng-click="vm.appendParticipant()" class="md-raised md-primary"  type="submit" ng-disabled="!vm.addParticipantForm.$valid">Add user</md-button>
+
+                <md-button ng-click="vm.save()" class="md-raised md-primary"  type="submit" ng-disabled="!vm.addParticipantForm.$valid">Submit event</md-button>
 
             </div>
-
-            <md-button ng-click="vm.appendParticipant()" class="md-raised md-primary"  type="submit" ng-disabled="!vm.addParticipantForm.$valid">Add user</md-button>
 
 
 
