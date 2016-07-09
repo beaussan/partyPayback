@@ -1,6 +1,6 @@
 # partyPayback
 
-Status : [![Build Status](http://nbeaussart.me:9089/buildStatus/icon?job=partyPayback)](http://nbeaussart.me:9089/job/partyPayback/)
+Status : [![Build Status](https://jenkins.nbeaussart.me/buildStatus/icon?job=partyPayback)](https://jenkins.nbeaussart.me/job/partyPayback)
 
 This application was generated using JHipster, you can find documentation and help at [https://jhipster.github.io](https://jhipster.github.io).
 
