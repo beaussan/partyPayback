@@ -37,7 +37,7 @@
         <dt><span translate="partyPaybackApp.event.initialPayiments">Initials payments</span></dt>
         <dd ng-repeat="inits in vm.initials">
             <span translate="partyPaybackApp.event.initHasPaid"  translate-values="{amount: '{{inits.ammount | currency : '€'}}', toPay: '{{vm.findUser(inits.userId).name}}' }">
-                {{inits.ammount}}€ à {{vm.findUser(inits.userId).name}}
+                {{inits.ammount | currency : '€'}} à {{vm.findUser(inits.userId).name}}
             </span>
 
         </dd>

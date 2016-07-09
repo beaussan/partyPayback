@@ -66,6 +66,22 @@
             </div>
 
         </form>
+        <div ng-if="vm.participants.length">
+            <div class="row">
+                <div class="col-md-4">Name</div>
+                <div class="col-md-4">Email</div>
+                <div class="col-md-2">Paiment</div>
+                <div class="col-md-2">Owner</div>
+            </div>
+            <br/>
+        </div>
+        <div class="row" ng-repeat="part in vm.participants">
+            <div class="col-md-4">{{part.name}}</div>
+            <div class="col-md-4">{{part.email}}</div>
+            <div class="col-md-2">{{part.paiment | currency : '€'}}</div>
+            <div class="col-md-2">{{part.owner}}</div>
+
+        </div>
         <md-divider></md-divider>
 
         <h4>Add a participant</h4>
@@ -123,7 +139,7 @@
 
                 <md-input-container class="md-block col-md-2">
 
-                    <md-switch ng-model="data.cb1" aria-label="Switch 1">
+                    <md-switch ng-model="vm.newParticipant.owner" aria-label="Switch 1">
                         Owner
                     </md-switch>
                 </md-input-container>
@@ -131,20 +147,20 @@
             </div>
 
             <div class="row">
-                <div flex></div>
                 <md-button ng-click="vm.appendParticipant()" class="md-raised md-primary"  type="submit" ng-disabled="!vm.addParticipantForm.$valid">Add user</md-button>
-
-                <md-button ng-click="vm.save()" class="md-raised md-primary"  type="submit" ng-disabled="!vm.addParticipantForm.$valid">Submit event</md-button>
-
+                <md-button ng-click="vm.save()" class="md-raised md-primary"  type="submit" ng-disabled="!editForm.$valid || !vm.participants.length">Submit event</md-button>
             </div>
 
 
-
+            <!--
             <pre> {{vm.participants | json }}</pre>
             <pre> {{vm.addParticipantForm | json }}</pre>
-
+            -->
 
         </form>
+
+
+
 
     </div>
 

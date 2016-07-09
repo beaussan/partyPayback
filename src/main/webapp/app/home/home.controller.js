@@ -5,9 +5,9 @@
         .module('partyPaybackApp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state', '$log'];
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state', '$log','Event', 'ExtandedUser', 'InitialPayment'];
 
-    function HomeController ($scope, Principal, LoginService, $state, $log) {
+    function HomeController ($scope, Principal, LoginService, $state, $log, Event, ExtandedUser, InitialPayment) {
         var vm = this;
 
         vm.account = null;
@@ -15,6 +15,10 @@
         vm.event = null;
 
         vm.participants = [];
+        vm.participantsSaved = [];
+        vm.ownersOfEvent = [];
+        vm.savedUserNmb = 0;
+
         vm.newParticipant = null;
         vm.addParticipantForm = null;
 
@@ -50,32 +54,33 @@
             $log.debug(vm.newParticipant);
             vm.participants.push(vm.newParticipant);
             vm.newParticipant = null;
-            vm.newParticipant.name = null;
-            vm.newParticipant.email = null;
-            vm.newParticipant.paiment = null;
-            vm.addParticipantForm.name.$setPristine();
-            vm.addParticipantForm.name.$setUntouched();
-            vm.addParticipantForm.email.$setPristine();
-            vm.addParticipantForm.email.$setUntouched();
-            vm.addParticipantForm.paiment.$setPristine();
-            vm.addParticipantForm.paiment.$setUntouched();
-            vm.addParticipantForm.$setPristine();
-            vm.addParticipantForm.$setUntouched();
         }
 
 
 
         function save () {
             vm.isSaving = true;
+            vm.savedUserNmb = 0;
             // TODO modify here
-            if (vm.event.id !== null) {
-                Event.update(vm.event, onSaveSuccess, onSaveError);
-            } else {
-                Event.save(vm.event, onSaveSuccess, onSaveError);
-            }
+            angular.forEach(vm.participants, function(value) {
+                ExtandedUser.save(value, onSaveSuccessUser(result, original), onSaveError);
+
+            });
+            while (vm.savedUserNmb != vm.participants.length){}
+            Event.save(vm.event, onSaveSuccess, onSaveError);
+
+        }
+
+        function onSaveSuccessUser(result, original) {
+            result.paiment = original.paiment;
+            vm.participantsSaved.push(result);
+            vm.savedUserNmb++;
         }
 
         function onSaveSuccess (result) {
+            angular.forEach(vm.participantsSaved, function (value) {
+
+            });
             $scope.$emit('partyPaybackApp:eventUpdate', result);
             //$uibModalInstance.close(result);
             vm.isSaving = false;
