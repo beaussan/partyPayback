@@ -1,5 +1,7 @@
 # partyPayback
 
+Status : [![Build Status](http://nbeaussart.me:9089/buildStatus/icon?job=partyPayback)](http://nbeaussart.me:9089/job/partyPayback/)
+
 This application was generated using JHipster, you can find documentation and help at [https://jhipster.github.io](https://jhipster.github.io).
 
 ## Development
@@ -68,11 +70,13 @@ To setup this project in Jenkins, use the following configuration:
     * Invoke Gradle script / Use Gradle Wrapper / Tasks: `-Pprod clean test bootRepackage`
     * Execute Shell / Command:
         ````
+
         ./gradlew bootRun &
         bootPid=$!
         sleep 30s
         gulp itest
         kill $bootPid
+
         ````
 * Post-build Actions
     * Publish JUnit test result report / Test Report XMLs: `build/test-results/*.xml,build/reports/e2e/*.xml`
