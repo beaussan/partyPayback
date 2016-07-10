@@ -5,6 +5,7 @@ import me.nbeaussart.payback.domain.Event;
 import me.nbeaussart.payback.domain.PayBack;
 import me.nbeaussart.payback.service.EventService;
 import me.nbeaussart.payback.service.PayBackService;
+import me.nbeaussart.payback.web.rest.dto.EventFullDTO;
 import me.nbeaussart.payback.web.rest.util.HeaderUtil;
 import me.nbeaussart.payback.web.rest.util.PaginationUtil;
 import me.nbeaussart.payback.web.rest.dto.EventDTO;
@@ -65,6 +66,30 @@ public class EventResource {
             .body(result);
     }
 
+    /**
+     * POST  /events : Create a new event fully populated.
+     *
+     * @param fullDTO the EventFullDTO to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new eventDTO, or with status 400 (Bad Request) if the event has already an ID
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @RequestMapping(value = "/events/full",
+        method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<EventDTO> createEventFull(@Valid @RequestBody EventFullDTO fullDTO) throws URISyntaxException {
+        log.debug("REST request to save Event : {}", fullDTO);
+        if (fullDTO.getId() != null) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("event", "idexists", "A new event cannot already have an ID")).body(null);
+        }
+        EventDTO result = eventService.saveFull(fullDTO);
+
+        return ResponseEntity.created(new URI("/api/events/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert("event", result.getId().toString()))
+            .body(result);
+    }
+
+    // EventFullDTO
     /**
      * PUT  /events : Updates an existing event.
      *

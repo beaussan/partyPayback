@@ -62,29 +62,18 @@
             vm.isSaving = true;
             vm.savedUserNmb = 0;
             // TODO modify here
-            angular.forEach(vm.participants, function(value) {
-                ExtandedUser.save(value, onSaveSuccessUser(result, original), onSaveError);
+            vm.event.participants = vm.participants;
+            Event.saveFull(vm.event, onSaveSuccess, onSaveError);
 
-            });
-            while (vm.savedUserNmb != vm.participants.length){}
-            Event.save(vm.event, onSaveSuccess, onSaveError);
-
-        }
-
-        function onSaveSuccessUser(result, original) {
-            result.paiment = original.paiment;
-            vm.participantsSaved.push(result);
-            vm.savedUserNmb++;
         }
 
         function onSaveSuccess (result) {
-            angular.forEach(vm.participantsSaved, function (value) {
-
-            });
             $scope.$emit('partyPaybackApp:eventUpdate', result);
             //$uibModalInstance.close(result);
             vm.isSaving = false;
             // TODO $state.go('somehwere');
+            $log.log(result);
+            $state.go('event-detail', {id:result.id});
         }
 
         function onSaveError () {

@@ -25,7 +25,8 @@
             "initialPayiments": "Initial Payiments",
             "payback": "Payback",
             "owner": "Owner",
-            "initHasPaid": "{{ toPay }} give {{ amount }}"
+            "initHasPaid": "{{ toPay }} ({{ toPayMail }})  give {{ amount }} for the event",
+            "paybackPaid": "{{ fromName }} ({{ fromMail }}) have to pay {{ amount }} to {{toName}} ({{toMail}})"
         }
     }
 }

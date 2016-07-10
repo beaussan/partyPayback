@@ -84,7 +84,7 @@
         </div>
         <md-divider></md-divider>
 
-        <h4>Add a participant</h4>
+        <h4><span translate="home.addParticipant">Add a participant</span></h4>
 
         <form name="vm.addParticipantForm" role="form" novalidate ng-submit="vm.appendParticipant()"  >
 
@@ -147,8 +147,8 @@
             </div>
 
             <div class="row">
-                <md-button ng-click="vm.appendParticipant()" class="md-raised md-primary"  type="submit" ng-disabled="!vm.addParticipantForm.$valid">Add user</md-button>
-                <md-button ng-click="vm.save()" class="md-raised md-primary"  type="submit" ng-disabled="!editForm.$valid || !vm.participants.length">Submit event</md-button>
+                <md-button ng-click="vm.appendParticipant()" class="md-raised md-primary"  type="submit" ng-disabled="!vm.addParticipantForm.$valid"><span translate="home.addUser">Add user</span></md-button>
+                <md-button ng-click="vm.save()" class="md-raised md-primary"  type="submit" ng-disabled="!editForm.$valid || !vm.participants.length"><span translate="home.submitEvent">Submit event</span></md-button>
             </div>
 
 

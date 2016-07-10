@@ -128,6 +128,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.POST, "/api/initial-payments").permitAll()
 
             .antMatchers(HttpMethod.POST, "/api/events").permitAll()
+            .antMatchers(HttpMethod.POST, "/api/sdevents/full").permitAll()
             .antMatchers(HttpMethod.GET,  "/api/events/**").permitAll()
             .antMatchers(HttpMethod.GET,  "/api/events/**/build").permitAll()
 

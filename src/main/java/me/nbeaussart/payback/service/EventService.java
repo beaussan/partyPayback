@@ -1,14 +1,17 @@
 package me.nbeaussart.payback.service;
 
 import java.time.ZonedDateTime;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
+import me.nbeaussart.payback.repository.ExtandedUserRepository;
+import me.nbeaussart.payback.repository.InitialPaymentRepository;
+import me.nbeaussart.payback.web.rest.ExtandedUserResource;
+import me.nbeaussart.payback.web.rest.InitialPaymentResource;
+import me.nbeaussart.payback.web.rest.dto.EventFullDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -39,6 +42,14 @@ public class EventService {
 
     @Inject
     private EventMapper eventMapper;
+
+    @Inject
+    private ExtandedUserRepository extandedUserRepository;
+
+    @Inject
+    private InitialPaymentRepository initialPaymentRepository;
+
+
 
 
     @Inject
@@ -95,6 +106,46 @@ public class EventService {
         eventRepository.delete(id);
     }
 
+
+    /**
+     * Save a full event send as one block
+     * @param eventDTO the EventFullDTO to save
+     * @return the event created
+     */
+    public EventDTO saveFull(EventFullDTO eventDTO) {
+
+        Event event = new Event();
+        event.setDate(eventDTO.getDate());
+        event.setLocation(eventDTO.getLocation());
+        event.setName(eventDTO.getName());
+        event.setSendinEmail(eventDTO.getSendinEmail());
+
+
+        List<InitialPayment> initialPayments = new ArrayList<>();
+
+        Set<ExtandedUser> users = eventDTO.getParticipants().stream().map(dto -> {
+            ExtandedUser extandedUser = new ExtandedUser();
+            extandedUser.setName(dto.getName());
+            extandedUser.setEmail(dto.getEmail());
+            extandedUser = extandedUserRepository.save(extandedUser);
+
+            InitialPayment initialPayment = new InitialPayment();
+            initialPayment.setAmmount(dto.getPaiment());
+            initialPayment.setUser(extandedUser);
+            initialPayments.add(initialPayment);
+            return extandedUser;
+        }).collect(Collectors.toSet());
+
+        event.setParticipants(users);
+        final Event eventSaved = eventRepository.save(event);
+
+        initialPayments.forEach(initialPayment -> initialPayment.setEvent(eventSaved));
+        initialPaymentRepository.save(initialPayments);
+
+        EventDTO result = eventMapper.eventToEventDTO(eventSaved);
+        return result;
+    }
+
     /**
      * Build all the paybacks for the event
      * @param id the id of the entity
@@ -107,7 +158,7 @@ public class EventService {
         Set<InitialPayment> initialPayments = event.getInitialPayiments();
         Set<PayBack> paybacks = event.getPaybacks();
         Set<ExtandedUser> participants = event.getParticipants();
-        
+
         PayBackProcessHelper processHelper = new PayBackProcessHelper();
         Double ammountPerUser = processHelper.getTotalAmmountPerPerson(initialPayments, participants);
         Map<ExtandedUser, Double> participantPayments = processHelper.getAllPaymentPerPerson(initialPayments);
@@ -119,7 +170,7 @@ public class EventService {
         Set<PayBack> newPayBacks = processHelper.getNewPayBacks(event, paybacks, debtors, creditors, this.payBackService);
 
         event.setPaybacks(newPayBacks);
-        
+
         EventDTO eventDTO = eventMapper.eventToEventDTO(event);
         return eventDTO;
     }

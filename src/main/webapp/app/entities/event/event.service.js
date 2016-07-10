@@ -31,6 +31,17 @@
                     return data;
                 }
             },
+            'saveFull': {
+                method: 'POST',
+                url : "api/events/full",
+                transformResponse: function (data) {
+                    if (data) {
+                        data = angular.fromJson(data);
+                        data.date = DateUtils.convertDateTimeFromServer(data.date);
+                    }
+                    return data;
+                }
+            },
             'update': { method:'PUT' }
         });
     }

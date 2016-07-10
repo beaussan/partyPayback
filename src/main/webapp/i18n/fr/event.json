@@ -17,15 +17,16 @@
                 "title": "Event"
             },
             "date": "Date",
-            "name": "Name",
+            "name": "Nom",
             "location": "Location",
-            "sendinEmail": "Sendin Email",
+            "sendinEmail": "Evois Email",
             "participants": "Participants",
             "initialPayiment": "Initial Payiment",
-            "initialPayiments": "Initial Payiments",
+            "initialPayiments": "Paiements initiaux",
             "payback": "Payback",
             "owner": "Owner",
-            "initHasPaid": "{{ toPay }} a donner {{ amount }}"
+            "initHasPaid": "{{ toPay }} ({{ toPayMail }}) a donner {{ amount }} pour l'evenemnet",
+            "paybackPaid": "{{ fromName }} ({{ fromMail }}) doit payer {{ amount }} à {{toName}} ({{toMail}})"
         }
     }
 }
