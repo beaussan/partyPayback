@@ -2,23 +2,23 @@
     "partyPaybackApp": {
         "initialPayment" : {
             "home": {
-                "title": "InitialPayments",
-                "createLabel": "Créer un nouveau Initial Payment",
-                "createOrEditLabel": "Créer ou éditer un Initial Payment",
-                "search": "Recherche pour Initial Payment"
+                "title": "Paiements initiaux",
+                "createLabel": "Créer un nouveau paiement",
+                "createOrEditLabel": "Créer ou éditer un paiement",
+                "search": "Recherche par paiement"
             },
-            "created": "Un nouveau Initial Payment a été créé avec l'identifiant {{ param }}",
-            "updated": "Le Initial Payment avec l'identifiant {{ param }} a été mis à jour",
-            "deleted": "Le Initial Payment avec l'identifiant {{ param }} a été supprimé",
+            "created": "Un nouveau paiement a été créé avec l'identifiant {{ param }}",
+            "updated": "Le payement avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le payement avec l'identifiant {{ param }} a été supprimé",
             "delete": {
-                "question": "Etes-vous certain de vouloir supprimer le Initial Payment {{ id }} ?"
+                "question": "Etes-vous certain de vouloir supprimer le payement {{ id }} ?"
             },
             "detail": {
-                "title": "Initial Payment"
+                "title": "Payement initial"
             },
-            "ammount": "Ammount",
-            "user": "User",
-            "event": "Event"
+            "ammount": "Somme",
+            "user": "Utilisateur",
+            "event": "Évenement"
         }
     }
 }

@@ -17,7 +17,7 @@
             "error": {
                 "fail": "<strong>Compte non créé!</strong> Merci d'essayer à nouveau plus tard.",
                 "userexists": "<strong>Ce compte utilisateur existe déjà !</strong> Veuillez en choisir un autre.",
-                "emailexists": "<strong>Cet E-mail est déjà utilisé!</strong> Veuillez en choisir un autre."
+                "emailexists": "<strong>Cet e-mail est déjà utilisé!</strong> Veuillez en choisir un autre."
             }
         }
     }

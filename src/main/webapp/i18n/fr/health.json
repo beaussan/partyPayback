@@ -2,7 +2,7 @@
     "health": {
         "title": "Diagnostics",
         "refresh.button": "Rafraichir",
-        "stacktrace": "Stacktrace",
+        "stacktrace": "Trace de la pile",
         "details": {
             "details": "Détails",
             "properties": "Propriétés",

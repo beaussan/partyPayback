@@ -2,29 +2,29 @@
     "partyPaybackApp": {
         "extandedUser" : {
             "home": {
-                "title": "ExtandedUsers",
-                "createLabel": "Créer un nouveau Extanded User",
-                "createOrEditLabel": "Créer ou éditer un Extanded User",
-                "search": "Recherche pour Extanded User"
+                "title": "Utilisateurs",
+                "createLabel": "Créer un nouveau utilisateur",
+                "createOrEditLabel": "Créer ou éditer un utilisateur",
+                "search": "Recherche par utilisateur"
             },
-            "created": "Un nouveau Extanded User a été créé avec l'identifiant {{ param }}",
-            "updated": "Le Extanded User avec l'identifiant {{ param }} a été mis à jour",
-            "deleted": "Le Extanded User avec l'identifiant {{ param }} a été supprimé",
+            "created": "Un nouvel utilisateur a été créé avec l'identifiant {{ param }}",
+            "updated": "L'utilisateur avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "L'utilisateur avec l'identifiant {{ param }} a été supprimé",
             "delete": {
-                "question": "Etes-vous certain de vouloir supprimer le Extanded User {{ id }} ?"
+                "question": "Etes-vous certain de vouloir supprimer l'utilisateur {{ id }} ?"
             },
             "detail": {
-                "title": "Extanded User"
+                "title": "Utilisateur"
             },
-            "name": "Name",
+            "name": "Nom",
             "email": "Email",
-            "sendinEmail": "Sendin Email",
-            "user": "User",
-            "toPay": "To Pay",
-            "payRecive": "Pay Recive",
-            "events": "Events",
-            "initialPaiment": "Initial Paiment",
-            "eventParcipatings": "Event Parcipatings"
+            "sendinEmail": "Envoyer un email",
+            "user": "Utilisateur",
+            "toPay": "A rembourser",
+            "payRecive": "Paiement reçu",
+            "events": "Événements",
+            "initialPaiment": "Paiement initial",
+            "eventParcipatings": "Événements associés"
         }
     }
 }

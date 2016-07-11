@@ -2,26 +2,26 @@
     "partyPaybackApp": {
         "payBack" : {
             "home": {
-                "title": "PayBacks",
-                "createLabel": "Créer un nouveau Pay Back",
-                "createOrEditLabel": "Créer ou éditer un Pay Back",
-                "search": "Recherche pour Pay Back"
+                "title": "Remboursements",
+                "createLabel": "Créer un nouveau remboursement",
+                "createOrEditLabel": "Créer ou éditer un remboursement",
+                "search": "Recherche par remboursement"
             },
-            "created": "Un nouveau Pay Back a été créé avec l'identifiant {{ param }}",
-            "updated": "Le Pay Back avec l'identifiant {{ param }} a été mis à jour",
-            "deleted": "Le Pay Back avec l'identifiant {{ param }} a été supprimé",
+            "created": "Un nouveau remboursement a été créé avec l'identifiant {{ param }}",
+            "updated": "Le remboursement avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le remboursement avec l'identifiant {{ param }} a été supprimé",
             "delete": {
-                "question": "Etes-vous certain de vouloir supprimer le Pay Back {{ id }} ?"
+                "question": "Etes-vous certain de vouloir supprimer le remboursement {{ id }} ?"
             },
             "detail": {
-                "title": "Pay Back"
+                "title": "Remboursement"
             },
-            "ammount": "Ammount",
-            "timestamp": "Timestamp",
-            "isPaid": "Is Paid",
-            "source": "Source",
-            "toPay": "To Pay",
-            "event": "Event"
+            "ammount": "Somme",
+            "timestamp": "Horadatage",
+            "isPaid": "A été payé",
+            "source": "Payeur",
+            "toPay": "Receveur",
+            "event": "Événement"
         }
     }
 }
