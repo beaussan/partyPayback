@@ -1,11 +1,17 @@
 package me.nbeaussart.payback.service.util;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.time.ZonedDateTime;
+import java.util.Currency;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import me.nbeaussart.payback.domain.Event;
 import me.nbeaussart.payback.domain.ExtandedUser;
@@ -31,8 +37,18 @@ public class PayBackProcessHelper {
 		for (InitialPayment initialPayment : initialPayments) {
 			totalAmmount += initialPayment.getAmmount();
 		}
-
-		return totalAmmount / participants.size();
+		Double returnAmmount = totalAmmount/participants.size();
+		NumberFormat df = new DecimalFormat("#0.00");
+		df.setRoundingMode(RoundingMode.HALF_UP);
+		try {
+			Number num = df.parse(df.format(returnAmmount));
+			returnAmmount = num.doubleValue();
+		} catch (ParseException e) {
+			returnAmmount = null;
+			e.printStackTrace();
+		}
+		return returnAmmount;
+		
 	}
 
 	/**
