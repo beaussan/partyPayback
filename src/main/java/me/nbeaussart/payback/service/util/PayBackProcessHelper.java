@@ -180,7 +180,7 @@ public class PayBackProcessHelper {
 			PayBackService payBackService, Set<PayBack> newPayBacks) {
         for (Entry<ExtandedUser, Double> creditor : creditors.entrySet()){
         	Double solde = creditor.getValue();
-        	while (solde > 0){
+        	while (solde > 0 && !debtors.isEmpty()){
         		Entry<ExtandedUser, Double> debtor = debtors.entrySet().iterator().next();
         		Double debt = solde - debtor.getValue();
         		PayBack payback = new PayBack();
